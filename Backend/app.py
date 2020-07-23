@@ -144,25 +144,6 @@ def login():
 
 
 
-#####For creating articles or blog##########
-     
-@app.route('/create_blog',methods=["POST"])   
-def make_article():
-    if request.method=="POST":
-        jwt_decoded=request.headers.get('Authorization')
-        decoded=jwt.decode( jwt_decoded, secret, algorithm=['HS256'])
-        user_id=decoded['user_id']
-        title=request.get_json('title')
-        body=request.get_json('body')
-        file=request.files["file"]
-        file.save(os.path.join(app.config["UPLOAD_FOLDER"],secure_filename(file.filename)))
-        article_img="/static/"+file.filename 
-        
-        cursor=mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('INSERT INTO articles(title,body,article_img,user_id) VALUES (%s,%s,%s,%s)'(title,body,article_img,user_id,))
-        mysql.connection.commit()
-        return jsonify({"message":"Post created"})
-
 
 ###For posting images and pics on posts     
 @app.route('/make_post',methods=["POST","GET"])   
@@ -216,18 +197,9 @@ def showposts():
 
         
 
-@app.route('/articles/<int:article_id>',methods=["GET","POST"])
-def single_article(article_id):
-    
-   
-    if request.method=="GET":
-        data=(article_id)
-        cursor.execute("SELECT* FROM articles,users,comments WHERE  articles.id=(?) AND users.id=articles.user_id AND comments.article_id=articles.id  ORDER BY created_at DESC",[article_id])
-        article=cursor.fetchall()
-        return jsonify(article)
         
       
-
+####For listing a single post 
         
 
 @app.route('/<int:post_id>',methods=["GET","POST"])
@@ -243,31 +215,6 @@ def singlepost(post_id):
             
         
         
-       
-######Listing comments or creating comment on an article####
-
-@app.route('/comments/<int:article_id>', methods=["GET","POST"])
-def listarticlecomments(article_id):
-    if request.method=="GET":
-        sql2="SELECT* FROM users,comments WHERE users.id=comments.user_id AND  comments.article_id=%s"
-        data=article_id
-        cursor.execute(sql2,data)
-        comments=cursor.fetchall()
-        return jsonify({"comments":comments})
-
-    if request.method=="POST":
-        comment=request.json.get('comment')
-        jwt_decoded=request.headers.get('Authorization')
-        decoded=jwt.decode(jwt_decoded, secret, algorithms=['HS256'])
-        user_id=decoded['userID']
-        article_id=article_id
-        sql1='INSERT INTO comments(article_id,comment_body,user_id) VALUES (%s,%s,%s)'
-        data1=(article_id,comment,user_id)
-        cursor.execute(sql1,data1)
-        mysql.connection.commit()
-        return jsonify({"message":"Comment sucessfully created"})
-
-
 
        
 #Listing comments or creating a comment on a post####
@@ -301,81 +248,7 @@ def listpostcomments(post_id):
 
 
 
-###Listing replies on a comment for articles#####
 
-@app.route("/replies/<int:comment_id>",methods=["POST","GET"])
-def listreplies(comment_id):
-    if request.method=="GET":
-        sql2="SELECT FROM replies,users WHERE users.id=users.reply_id AND  comments_id=%s"
-        data=comment_id
-        cursor.execute(sql2,data)
-        replies=cursor.fetchall()
-        return jsonify({"comments":replies})
-
-    if request.method=="POST":
-        reply_body=request.json.get('reply')
-        jwt_decoded=request.headers.get('Authorization')
-        decoded=jwt.decode(jwt_decoded, secret, algorithms=['HS256'])
-        user_id=decoded['userID']
-        
-        sql1='INSERT INTO replies(comment_id,reply_body,user_id) VALUES (%s,%s,%s)'
-        data1=(comment_id,reply_body,user_id)
-        cursor.execute(sql1,data1)
-        db.commit()
-        return jsonify({"message":"Reply sucessfully created"})
-        
-
-
-
-########Listing replies on a comment for a post made by a user############
-
-@app.route("/post_replies/<int:post_comment_id>",methods=["POST","GET"])
-def post_replies(post_comment_id):
-    if request.method=="GET":
-        sql2="SELECT FROM reply_post_comments,users WHERE users.id=reply_post_comments.user_id AND  post_comment_id=%s"
-        data=post_comment_id
-        cursor.execute(sql2,data)
-        replies=cursor.fetchall()
-        return jsonify({"replies":replies})
-
-    if request.method=="POST":
-        reply_body=request.json.get('reply_body')
-        jwt_decoded=request.headers.get('Authorization')
-        decoded=jwt.decode(jwt_decoded, secret, algorithms=['HS256'])
-        user_id=decoded['userID']
-        sql1='INSERT INTO post_reply_comments(post_comment_id,body,user_id) VALUES (%s,%s,%s)'
-        data1=(post_comment_id,reply_body,user_id)
-        cursor.execute(sql1,data1)
-        db.commit()
-        return jsonify({"message":" Reply  sucessfully created"})
-
-
-
-
-############Section for likes##############################################          
-
-
-############Articles likes#####################
-
-@app.route('/likes/<int:article_id>',methods=["POST","GET","DELETE"])   
-def likearticle(article_id):
-    if request.method=="GET":
-        sql="SELECT* FROM article_likes,users WHERE users.id=article_likes.user_id AND article_likes.article_id=%s"
-        data=article_id
-        cursor.execute(sql,data)
-        article_likes=cursor.fetchall()
-        return jsonify(article_likes)
-    
-
-    if request.method=="POST":
-        jwt_decoded=request.headers.get('Authorization')
-        decoded=jwt.decode(jwt_decoded, secret, algorithms=['HS256'])
-        user_id=decoded['userID']
-        sql="INSERT INTO articles_likes(article_id,user_id) VALUES(%s,%s,%s)"
-        data=(article_id,user_id)
-        cursor.execute(sql,data)
-        db.commit()
-        return jsonify("One like added")
 
 
 
@@ -387,215 +260,6 @@ def likearticle(article_id):
 
 
     
-    
-
-###################post_likes##################
-
-@app.route('/post_likes/<int:post_id>',methods=["POST","GET","DELETE"])   
-def likepost(post_id):
-    if request.method=="GET":
-        sql="SELECT* FROM post_likes,users WHERE users.id=post_likes.user_id AND post_likes.post_id=%s"
-        data=post_id
-        cursor.execute(sql,data)
-        post_likes=cursor.fetchall()
-        return jsonify(post_likes)
-    
-
-    if request.method=="POST":
-        jwt_decoded=request.headers.get('Authorization')
-        decoded=jwt.decode(jwt_decoded, secret, algorithms=['HS256'])
-        user_id=decoded['userID']
-        sql="INSERT INTO post_likes(post_id,user_id) VALUES(%s,%s,%s)"
-        data=(post_id,user_id)
-        cursor.execute(sql,data)
-        db.commit()
-        return jsonify("One like added")
-    
-
-
-
-############Unliking an article#############
-
-@app.route("/unlike/<int:article_id>")
-def unlike_article(article_id):
-    if request.method=="DELETE":
-        jwt_decoded=request.headers.get('Authorization')
-        decoded=jwt.decode(jwt_decoded, secret, algorithms=['HS256'])
-        user_id=decoded['userID']
-        article_id=article_id
-        sql="DELETE FROM article_likes WHERE post_id=%s"
-        data=article_id
-        cursor.execute(sql,data)
-        db.commit()
-        return jsonify("Unliked")
-
-
-
-
-#######Unliking a post#############
-@app.route("/post_unlike/<int:post_id>")
-def unlike_post(post_id):
-    if request.method=="DELETE":
-        jwt_decoded=request.headers.get('Authorization')
-        decoded=jwt.decode(jwt_decoded, secret, algorithms=['HS256'])
-        user_id=decoded['userID']
-        article_id=post_id
-        sql="DELETE FROM post_likes WHERE post_id=%s"
-        data=post_id
-        cursor.execute(sql,data)
-        db.commit()
-        return jsonify("Unliked")
-
-
-
-
-
-################comment_likes  for articles#######
-
-@app.route('/likes/<int:comment_id>',methods=["POST","GET"])   
-def likearticlecomment(comment_id):
-    if request.method=="GET":
-        sql="SELECT* FROM comment_likes,users WHERE users.id=comment_likes.user_id AND comment_likes.comment_id=%s"
-        data=comment_id
-        cursor.execute(sql,data)
-        comment_likes=cursor.fetchall()
-        return jsonify(comment_likes)
-    
-
-    if request.method=="POST":
-        jwt_decoded=request.headers.get('Authorization')
-        decoded=jwt.decode(jwt_decoded, secret, algorithms=['HS256'])
-        user_id=decoded['userID']
-        
-        sql="INSERT INTO comment_likes(comment_id,user_id) VALUES(%s,%s,%s)"
-        data=(comment_id,user_id)
-        cursor.execute(sql,data)
-        db.commit()
-        return jsonify("One like added")
-
-
-#####Comment like for a post###############
-
-@app.route('/post_comment_likes/<int:post_comment_id>',methods=["POST","GET"])   
-def likepostcomment(post_comment_id):
-    if request.method=="GET":
-        cursor=mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute("SELECT* FROM post_comment_likes,users WHERE users.id=post_comment_likes.user_id AND post_comment_likes.post_comment_id=%s",(post_comment_id,))
-        post_comment_likes=cursor.fetchall()
-        return jsonify(post_comment_likes)
-    
-
-    if request.method=="POST":
-        jwt_decoded=request.headers.get('Authorization')
-        decoded=jwt.decode(jwt_decoded, secret, algorithms=['HS256'])
-        user_id=decoded['user_id']
-        
-        sql="INSERT INTO post_comment_likes(post_comment_id,user_id) VALUES(%s,%s,%s)"
-        data=(post_comment_id,user_id)
-        cursor.execute(sql,data)
-        db.commit()
-        return jsonify("One like added")
-
-
-
-
-
-
-
-
-
-#########For unliking a comment on an article###########
-
-@app.route("/unlike/<int:comment_id>")
-def unlike_comment(comment_id):
-    if request.method=="DELETE":
-        jwt_decoded=request.headers.get('Authorization')
-        decoded=jwt.decode(jwt_decoded, secret, algorithms=['HS256'])
-        user_id=decoded['userID']
-        
-        sql="DELETE FROM comment_likes WHERE comment_id=%s"
-        data=comment_id
-        cursor.execute(sql,data)
-        db.commit()
-        return jsonify("Unliked")
-
-
-
-############For unliking a comment on post#############
-
-@app.route("/post_comment_unlike/<int:post_comment_id>")
-def unlike_post_comment(post_comment_id):
-    if request.method=="DELETE":
-        jwt_decoded=request.headers.get('Authorization')
-        decoded=jwt.decode(jwt_decoded, secret, algorithms=['HS256'])
-        user_id=decoded['userID']
-        
-        sql="DELETE FROM post_comment_likes WHERE post_comment_id=%s"
-        data=post_comment_id
-        cursor.execute(sql,data)
-        db.commit()
-        return jsonify("Unliked")
-
-
-
-
-
-
-
-
-
-
-
-
-
-#############reply_likes on articles###########
-
-@app.route('/likes/<int:reply_id>',methods=["POST","GET"])   
-def likearticlereplies(reply_id):
-    if request.method=="GET":
-        sql="SELECT* FROM reply_likes,users WHERE users.id=reply_likes.user_id AND reply_likes.reply_id=%s"
-        data=reply_id
-        cursor.execute(sql,data)
-        reply_likes=cursor.fetchall()
-        return jsonify(reply_likes)
-    
-
-    if request.method=="POST":
-        jwt_decoded=request.headers.get('Authorization')
-        decoded=jwt.decode(jwt_decoded, secret, algorithms=['HS256'])
-        user_id=decoded['userID']
-        comment_id=comment_id
-        sql="INSERT INTO reply_likes(reply_id,user_id) VALUES(%s,%s,%s)"
-        data=(reply_id,user_id)
-        cursor.execute(sql,data)
-        db.commit()
-        return jsonify("One like added")
-
-
-
-#########reply likes on a post#########
-
-@app.route('/post_reply_likes/<int:post_reply_id>',methods=["POST","GET"])   
-def likepostreplies(post_reply_id):
-    if request.method=="GET":
-        sql="SELECT* FROM reply_post_comment_likes,users WHERE users.id=post_reply_likes.user_id AND post_reply_likes.post_reply_id=%s"
-        data=post_reply_id
-        cursor.execute(sql,data)
-        reply_likes=cursor.fetchall()
-        return jsonify(reply_likes)
-    
-
-    if request.method=="POST":
-        jwt_decoded=request.headers.get('Authorization')
-        decoded=jwt.decode(jwt_decoded, secret, algorithms=['HS256'])
-        user_id=decoded['userID']
-    
-        sql="INSERT INTO reply_post_comment_likes(post_reply_id,user_id) VALUES(%s,%s,%s)"
-        data=(post_reply_id,user_id)
-        cursor.execute(sql,data)
-        db.commit()
-        return jsonify("One like added")
-
   
 
 
@@ -606,53 +270,7 @@ def likepostreplies(post_reply_id):
 
 
 
-
-
-
-
-#########Unlike reply for an article###############
-
-@app.route("/unlike/<int:reply_id>")
-def unlike_reply(reply_id):
-    if request.method=="DELETE":
-        jwt_decoded=request.headers.get('Authorization')
-        decoded=jwt.decode(jwt_decoded, secret, algorithms=['HS256'])
-        user_id=decoded['userID']
-        
-        sql="DELETE FROM reply_likes WHERE reply_id=%s"
-        data=reply_id
-        cursor.execute(sql,data)
-        db.commit()
-        return jsonify("Unliked")
-
-
-###########Unlike reply for a post###########
-
-@app.route("/post_reply_unlike/<int:post_reply_id>")
-def unlike_post_reply(post_reply_id):
-    if request.method=="DELETE":
-        jwt_decoded=request.headers.get('Authorization')
-        decoded=jwt.decode(jwt_decoded, secret, algorithms=['HS256'])
-        user_id=decoded['userID']
-        sql="DELETE FROM reply_post_comment_likes WHERE reply_id=%s"
-        data=post_reply_id
-        cursor.execute(sql,data)
-        db.commit()
-        return jsonify("Unliked")
-
-
-
 ###############Delete section####################
-
-###########Delete an article##############
-@app.route("/<int:article_id>",methods=["DELETE"])
-def deletearticle(article_id):
-    sql="DELETE FROM articles WHERE articles.id=%s"
-    data=article_id
-    cursor.execute(sql,data)
-    db.commit()
-    return jsonify({"message":"Post deleted sucessfully"})
-
 
 
 
@@ -668,22 +286,6 @@ def deletepost(post_id):
 
 
 
-###########Delete Comment on an article############
-
-@app.route("/comments/<int:comment_id>",methods=["DELETE"])
-def delete_article_comment(comment_id):
-    
-    sql="DELETE FROM comments WHERE comments._id=(?)"
-    data=comment_id
-    cursor.execute(sql,[data])
-    return jsonify({"message":"Comment sucessfully deleted"})
-
-
-
-
-
-
-
 
 ###########Delete Comment on a post##########
 @app.route("/post_comment_delete/<int:post_comment_id>",methods=["DELETE"])
@@ -695,27 +297,6 @@ def delete_post_comment(post_comment_id):
     mysql.connection.commit()
     return jsonify({"message":"Comment sucessfully deleted"})
 
-
-
-#############Delete a reply on an article##########
-
-@app.route("/replies/<int:reply_id>", methods=["DELETE"])
-def deletereply(reply_id):
-    sql="DELETE FROM   replies  WHERE replies.id=(?)"
-    data=reply_id
-    cursor.execute(sql,[data])
-    return jsonify({"message":"reply successfully deleted"})
-
-
-
-
-#######Delete a reply on a post###########
-@app.route("/post_reply_delete/<int:post_reply_id>", methods=["DELETE"])
-def delete_post_reply(post_reply_id):
-    
-    cursor=mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute("DELETE FROM reply_post_comments WHERE reply_post_comments.id=%s",(post_reply_id,))
-    return jsonify({"message":"reply successfully deleted"})
 
 
 
