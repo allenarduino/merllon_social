@@ -11,7 +11,7 @@
   ],
   "main": "src/index.js",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "ckeditor4-react": "^1.1.0",
     "contentful": "^7.14.3",
