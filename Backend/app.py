@@ -3,15 +3,13 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
 
-#import pymysql
+import pymysql
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
-#import hashlib
-#import base64 
 import jwt
 import os
 import json
-#import sqlite3
+
 
 
 
@@ -71,23 +69,17 @@ app.config["COLLATION"]='utf8mb4_ci'
 mysql=MySQL(app)
 
 
+ 
 
-
-
-
-
-
-
-
-
-
-
+##User sign up below
 @app.route('/signup',methods=["POST"])
 def signup():
     if request.method=='POST':
         name=request.form["name"]
         email=request.form["email"]
         password=request.form["password"]
+        ###Hashing user password
+        password=bcrypt.generate_password_hash(password)
         cursor=mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute("SELECT email from users WHERE email=%s",(email,))
         account=cursor.fetchone()
@@ -106,45 +98,54 @@ def signup():
             
             return jsonify({"message":"You're successfully registered"})
               
+
+
         
                 
 
 
-@app.route('/login', methods=["POST"])
+
+#User Login below
+@app.route('/login', methods=["POST","GET"])
 def login():
     if request.method=="POST":
-        email=request.form["email"]
-        password=request.form["password"]
+        email=request.form['email']
+        password=request.form['password']
+       
+        sql="SELECT* FROM users WHERE email=%s"
+        data=(email,)
         cursor=mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute("SELECT* FROM users WHERE email=%s AND password=%s",(email,password,))
+        cursor.execute(sql,data)
         account=cursor.fetchone()
-        
-        
-        
-        
+        #If email exists in database, continue authentication else throw error message
         if account:
+            hashed_password=account["password"]
+            authenticated_user=bcrypt.check_password_hash(hashed_password,password)
 
-            user_id=account["id"]
-            payload={
-                'user_id':user_id
+        #If password is correct,encode log customer in/else throw error message
+            if authenticated_user:
+
+                user_id=account["id"]  
+                email=account["email"]
+                payload={
+                'user_id':user_id 
+                }
+    
+                token=jwt.encode(payload,secret)
+                return jsonify(token.decode("UTF-8"))
+
+            else:
+                return jsonify({"error":"Invalid Email or password"})
+
+
                 
-                
-                
-            }
-            token=jwt.encode(payload,secret)
-            return jsonify(token.decode("UTF-8"))
+    
 
         else:
-            
-            return jsonify({"error":"Invalid email or password"})
-       
-
-            
-            
-
-
-
-
+            return jsonify({"error":"Email is not in our database"})
+     
+    
+                
 ###For posting images and pics on posts     
 @app.route('/make_post',methods=["POST","GET"])   
 def make_post():
