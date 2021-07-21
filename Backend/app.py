@@ -1,7 +1,7 @@
-from flask import Flask,render_template,redirect,request,flash,url_for,jsonify,make_response,json
+from flask import Flask,request,jsonify,make_response,json
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
-
+from flask_bcrypt import Bcrypt 
 
 import pymysql
 from flask_mysqldb import MySQL
@@ -9,6 +9,7 @@ import MySQLdb.cursors
 import jwt
 import os
 import json
+
 
 
 
