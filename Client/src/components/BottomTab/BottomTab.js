@@ -6,12 +6,13 @@ import {
   HomeOutlined,
   SearchOutlined,
   BellOutlined,
-  MenuOutlined
+  MenuOutlined,
+  ProfileOutlined
 } from "@ant-design/icons";
 
 const BottomTab = props => {
   const history = useHistory();
-  const [active, setActive] = React.useState(props.name);
+  const [activeTabs, setActive] = React.useState(props.name);
   React.useEffect(() => {
     switch (activeTabs) {
       case "home":
@@ -27,17 +28,19 @@ const BottomTab = props => {
   }, [activeTabs, history]);
 
   return (
-    <BottomNav>
-      <BnTab>
-        {activeTabs == "home" ? <BellOutlined /> : <SearchOutlined />}
-      </BnTab>
-      <BnTab>
-        {activeTabs == "home" ? <BellOutlined /> : <SearchOutlined />}
-      </BnTab>
-      <BnTab>
-        {activeTabs == "home" ? <BellOutlined /> : <SearchOutlined />}
-      </BnTab>
-    </BottomNav>
+    <div style={{ justifyContent: "center", display: "flex" }}>
+      <BottomNav>
+        <BnTab>
+          {activeTabs == "home" ? <HomeOutlined /> : <HomeOutlined />}
+        </BnTab>
+        <BnTab>
+          {activeTabs == "home" ? <SearchOutlined /> : <SearchOutlined />}
+        </BnTab>
+        <BnTab>
+          {activeTabs == "home" ? <ProfileOutlined /> : <ProfileOutlined />}
+        </BnTab>
+      </BottomNav>
+    </div>
   );
 };
 
