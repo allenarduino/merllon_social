@@ -3,8 +3,17 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import PostContext from "./contexts/PostContextProvider";
+import AuthContext from "./contexts/AuthContextProvider";
+ReactDOM.render(
+  <PostContext>
+    <AuthContext>
+      <App />
+    </AuthContext>
+  </PostContext>,
 
-ReactDOM.render(<App />, document.getElementById("root"));
+  document.getElementById("root")
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

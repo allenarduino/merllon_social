@@ -1,43 +1,63 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation, Link, useHistory } from "react-router-dom";
 import { BottomNav, BnTab } from "./styles";
-
-import {
-  HomeOutlined,
-  SearchOutlined,
-  BellOutlined,
-  MenuOutlined,
-  ProfileOutlined
-} from "@ant-design/icons";
+import * as Icon from "react-feather";
 
 const BottomTab = props => {
+  const location = useLocation();
   const history = useHistory();
-  const [activeTabs, setActive] = React.useState(props.name);
-  React.useEffect(() => {
-    switch (activeTabs) {
-      case "home":
-        history.push("/");
-        break;
-      case "search":
-        history.push("/search");
-        break;
-      default:
-        history.push("/");
-        break;
-    }
-  }, [activeTabs, history]);
 
   return (
     <div style={{ justifyContent: "center", display: "flex" }}>
       <BottomNav>
         <BnTab>
-          {activeTabs == "home" ? <HomeOutlined /> : <HomeOutlined />}
+          {location.pathname === "/" ? (
+            <Icon.Home
+              onClick={() => history.push("/")}
+              name="home-outline"
+              className="mr-2 feedIcons"
+              color="black"
+              size={24}
+            />
+          ) : (
+            <Icon.Home
+              className="mr-2 feedIcons"
+              size={20}
+              onClick={() => history.push("/")}
+            />
+          )}
         </BnTab>
         <BnTab>
-          {activeTabs == "home" ? <SearchOutlined /> : <SearchOutlined />}
+          {location.pathname === "/create_post" ? (
+            <Icon.PlusCircle
+              className="mr-2 feedIcons"
+              color="black"
+              size={24}
+              onClick={() => history.push("/create_post")}
+            />
+          ) : (
+            <Icon.PlusCircle
+              className="mr-2 feedIcons"
+              size={20}
+              onClick={() => history.push("/create_post")}
+            />
+          )}
         </BnTab>
         <BnTab>
-          {activeTabs == "home" ? <ProfileOutlined /> : <ProfileOutlined />}
+          {location.pathname === "/profile" ? (
+            <Icon.User
+              className="mr-2 feedIcons"
+              color="black"
+              size={24}
+              onClick={() => history.push("/profile")}
+            />
+          ) : (
+            <Icon.User
+              className="mr-2 feedIcons"
+              size={20}
+              onClick={() => history.push("/profile")}
+            />
+          )}
         </BnTab>
       </BottomNav>
     </div>

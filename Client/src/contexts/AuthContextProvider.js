@@ -7,7 +7,8 @@ export const AuthContext = React.createContext();
 const initialState = {
   isLoggedIn: false,
   loading: true,
-  token: null
+  token: null,
+  url: "http://localhost:4000"
 };
 
 const AuthContextProvider = props => {
@@ -17,7 +18,7 @@ const AuthContextProvider = props => {
   );
 
   return (
-    <AuthContext.Provider value={{ authstate, authdispatch }}>
+    <AuthContext.Provider value={{ auth_state, auth_dispatch }}>
       {props.children}
     </AuthContext.Provider>
   );

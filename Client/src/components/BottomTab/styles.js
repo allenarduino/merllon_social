@@ -1,10 +1,15 @@
 import styled from "styled-components";
 
 export const BottomNav = styled.div`
+  @media (min-width: ${500}px) {
+    display: none;
+  }
   width: 80%;
+  z-index: 2;
   height: 40px;
   display: flex;
   justify-content: center;
+  background-color: #fff;
   align-items: center;
   position: fixed;
   bottom: 0;
