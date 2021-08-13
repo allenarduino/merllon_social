@@ -1,9 +1,10 @@
 import React from "react";
 import { profileReducer } from "../reducers/ProfileReducer";
 
-export const PostContext = React.createContext();
+export const ProfileContext = React.createContext();
 const initialState = {
-  profile: []
+  profile: [],
+  user_posts: []
 };
 
 const PostContextProvider = props => {
@@ -13,9 +14,9 @@ const PostContextProvider = props => {
   );
 
   return (
-    <PostContext.Provider value={{ profile_state, profile_dispatch }}>
+    <ProfileContext.Provider value={{ profile_state, profile_dispatch }}>
       {props.children}
-    </PostContext.Provider>
+    </ProfileContext.Provider>
   );
 };
 export default PostContextProvider;

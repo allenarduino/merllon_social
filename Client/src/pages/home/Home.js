@@ -5,6 +5,7 @@ import { AuthContext } from "../../contexts/AuthContextProvider";
 import { Fade } from "react-reveal";
 import Loader from "../../components/Loader/Loader";
 import PostCard from "../../components/PostCard/PostCard";
+import Header from "../../components/Header/Header";
 import jwt_decode from "jwt-decode";
 
 import {
@@ -14,7 +15,6 @@ import {
   SideNav,
   Avatar
 } from "./styles";
-import Header from "../../components/Header/Header";
 
 const Home = () => {
   const { post_state, post_dispatch } = React.useContext(PostContext);

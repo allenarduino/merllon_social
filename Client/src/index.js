@@ -6,11 +6,14 @@ import * as serviceWorker from "./serviceWorker";
 import PostContext from "./contexts/PostContextProvider";
 import AuthContext from "./contexts/AuthContextProvider";
 import ThemeContext from "./contexts/ThemeContextProvider";
+import ProfileContext from "./contexts/ProfileContextProvider";
 ReactDOM.render(
   <PostContext>
     <AuthContext>
       <ThemeContext>
-        <App />
+        <ProfileContext>
+          <App />
+        </ProfileContext>
       </ThemeContext>
     </AuthContext>
   </PostContext>,

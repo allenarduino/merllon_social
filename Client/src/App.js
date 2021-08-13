@@ -4,7 +4,7 @@ import { AuthContext } from "./contexts/AuthContextProvider";
 import BottomTab from "./components/BottomTab/BottomTab";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
-import CreatePost from "./pages/createpost.js";
+import CreatePost from "./pages/createpost/CreatePost";
 import Home from "./pages/home/Home";
 import Header from "./components/Header/Header";
 import Profile from "./pages/profile/Profile";
