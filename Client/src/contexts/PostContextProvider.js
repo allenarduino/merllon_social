@@ -3,7 +3,8 @@ import { postReducer } from "../reducers/PostReducer";
 
 export const PostContext = React.createContext();
 const initialState = {
-  posts: []
+  posts: [],
+  user: []
 };
 
 const PostContextProvider = props => {

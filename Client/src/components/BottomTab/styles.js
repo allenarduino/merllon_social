@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
 export const BottomNav = styled.div`
-  @media (min-width: ${500}px) {
+  @media (min-width: ${769}px) {
     display: none;
   }
   width: 80%;
+  max-width: 400px;
   z-index: 2;
   height: 40px;
   display: flex;

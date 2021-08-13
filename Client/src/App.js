@@ -5,6 +5,8 @@ import BottomTab from "./components/BottomTab/BottomTab";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Home from "./pages/home/Home";
+import Header from "./components/Header/Header";
+import CreatePost from "./pages/CreatePost";
 
 const App = () => {
   const { auth_state, auth_dispatch } = React.useContext(AuthContext);
@@ -27,10 +29,15 @@ const App = () => {
   }, []);
   return (
     <Router>
-      {auth_state.isLoggedIn ? <BottomTab /> : null}
+      {auth_state.isLoggedIn ? (
+        <React.Fragment>
+          <BottomTab />
+        </React.Fragment>
+      ) : null}
       {auth_state.isLoggedIn ? (
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route path="/create_post" component={CreatePost} />
         </Switch>
       ) : (
         <Switch>

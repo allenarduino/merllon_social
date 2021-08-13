@@ -6,12 +6,15 @@ import { Fade } from "react-reveal";
 import Loader from "../../components/Loader/Loader";
 import PostCard from "../../components/PostCard/PostCard";
 import jwt_decode from "jwt-decode";
+
 import {
   MainContainer,
   ContentConatainer,
   PostsContainer,
-  SideNav
+  SideNav,
+  Avatar
 } from "./styles";
+import Header from "../../components/Header/Header";
 
 const Home = () => {
   const { post_state, post_dispatch } = React.useContext(PostContext);
@@ -34,6 +37,7 @@ const Home = () => {
       .then(res => res.json())
       .then(data => {
         post_dispatch({ type: "FETCH_POSTS", payload: data.posts });
+        post_dispatch({ type: "FETCH_USER", payload: data.user });
       })
       .catch(err => console.log(err));
   };
@@ -42,20 +46,29 @@ const Home = () => {
     fetch_posts();
   }, [auth_state.token, post_state.token]);
   return (
-    <MainContainer>
-      <ContentConatainer>
-        {post_state.posts.length == 0 ? (
-          <Loader />
-        ) : (
-          post_state.posts.map(post => (
-            <PostsContainer>
-              <PostCard post={post} />
-            </PostsContainer>
-          ))
-        )}
-        <SideNav>Hello</SideNav>
-      </ContentConatainer>
-    </MainContainer>
+    <div>
+      <Header />
+      <MainContainer>
+        <ContentConatainer>
+          {post_state.posts.length == 0 ? (
+            <Loader />
+          ) : (
+            post_state.posts.map(post => (
+              <PostsContainer>
+                <PostCard post={post} />
+              </PostsContainer>
+            ))
+          )}
+
+          {post_state.user.map(user => (
+            <SideNav>
+              <Avatar src={`${url}/${user.user_img}`} />
+              <b>{user.full_name}</b>
+            </SideNav>
+          ))}
+        </ContentConatainer>
+      </MainContainer>
+    </div>
   );
 };
 

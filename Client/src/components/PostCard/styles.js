@@ -5,7 +5,6 @@ export const PostCardDesign = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   padding: 10px 10px 0;
-  cursor: pointer;
   margin-top: 30px;
 `;
 
@@ -115,6 +114,7 @@ export const Line4 = styled.div`
   font-size: 13px;
   display: flex;
   flex-direction: row;
+  width: 100px;
   justify-content: space-around;
   margin-top: 10px;
   padding-bottom: 10px;

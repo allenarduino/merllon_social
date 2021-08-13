@@ -12,7 +12,7 @@ const ThemeContextProvider = props => {
     foreground: "#192734",
     typoMain: "#ffffff",
     typoSecondary: "#8899A6",
-    mobileNavIcon: "#8899a6",
+    mobileNavIcon: "#333",
     border: "#e6ecf0"
   };
 
