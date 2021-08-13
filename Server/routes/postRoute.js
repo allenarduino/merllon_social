@@ -35,6 +35,7 @@ router.post("/create_post", type, auth, function(req, res) {
 
   db.query(sql, inputData, function(err, data) {
     console.log(inputData);
+    console.log(err);
     res.status(200).json({
       message: "Post Created"
     });
