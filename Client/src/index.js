@@ -5,10 +5,13 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import PostContext from "./contexts/PostContextProvider";
 import AuthContext from "./contexts/AuthContextProvider";
+import ThemeContext from "./contexts/ThemeContextProvider";
 ReactDOM.render(
   <PostContext>
     <AuthContext>
-      <App />
+      <ThemeContext>
+        <App />
+      </ThemeContext>
     </AuthContext>
   </PostContext>,
 

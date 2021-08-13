@@ -1,6 +1,5 @@
 import React from "react";
 import { authReducer } from "../reducers/AuthReducer";
-import { checkPropTypes } from "prop-types";
 
 export const AuthContext = React.createContext();
 
