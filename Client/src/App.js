@@ -4,9 +4,10 @@ import { AuthContext } from "./contexts/AuthContextProvider";
 import BottomTab from "./components/BottomTab/BottomTab";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import CreatePost from "./pages/createpost.js";
 import Home from "./pages/home/Home";
 import Header from "./components/Header/Header";
-import CreatePost from "./pages/CreatePost";
+import Profile from "./pages/profile/Profile";
 
 const App = () => {
   const { auth_state, auth_dispatch } = React.useContext(AuthContext);
@@ -38,6 +39,7 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/create_post" component={CreatePost} />
+          <Route path="/profile" component={Profile} />
         </Switch>
       ) : (
         <Switch>
