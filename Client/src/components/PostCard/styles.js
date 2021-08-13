@@ -120,6 +120,13 @@ export const Line4 = styled.div`
   padding-bottom: 10px;
 `;
 
+export const HeartWrapper = styled.div`
+  position: absolute;
+  margin-left: 50px;
+  margin-top: 50px;
+  animation: pulse 1s infinite;
+`;
+
 export const CommentBackground = styled.div`
   position: absolute;
   top: -7px;
