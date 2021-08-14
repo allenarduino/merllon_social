@@ -3,6 +3,7 @@ import { useLocation, Link } from "react-router-dom";
 import { HeaderDesign, HeaderRight, Spacer } from "./styles";
 import * as Icon from "react-feather";
 
+//General Header for Desktop
 const DeskTopHeader = () => {
   const location = useLocation();
 

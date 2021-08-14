@@ -7,7 +7,7 @@ import Sheet from "react-modal-sheet";
 const BottomTab = props => {
   const location = useLocation();
   const history = useHistory();
-  const [isOpen, setOpen] = React.useState(true);
+  const [isOpen, setOpen] = React.useState(false);
   const [post_media, setPostMedia] = React.useState(null);
   const [imgPreview, setImgPreview] = React.useState(null);
   const [videoPreview, setVideoPreview] = React.useState(null);
@@ -15,7 +15,7 @@ const BottomTab = props => {
   const handle_image_change = e => {
     setImgPreview(URL.createObjectURL(e.target.files[0]));
     setPostMedia(e.target.files[0]);
-    history.push("/create_post", {
+    history.push("/post_image", {
       post_media: post_media,
       imgPreview: imgPreview
     });
@@ -25,7 +25,7 @@ const BottomTab = props => {
   const handle_video_change = e => {
     setVideoPreview(URL.createObjectURL(e.target.files[0]));
     setPostMedia(e.target.files[0]);
-    history.push("/create_post", {
+    history.push("/post_video", {
       post_media: post_media,
       videoPreview: videoPreview
     });

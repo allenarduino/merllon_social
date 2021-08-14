@@ -2,7 +2,8 @@ import React from "react";
 import { HeaderDesign, HeaderRight, Spacer } from "./styles";
 import * as Icon from "react-feather";
 
-const MobileHeader = () => {
+//Header for home on phone screen sizes
+const HomeHeader = () => {
   return (
     <HeaderDesign>
       <b style={{ display: "flex", alignSelf: "center" }}>Merllon</b>
@@ -11,4 +12,4 @@ const MobileHeader = () => {
   );
 };
 
-export default MobileHeader;
+export default HomeHeader;

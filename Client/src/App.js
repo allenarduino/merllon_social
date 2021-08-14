@@ -8,6 +8,8 @@ import Register from "./pages/register/Register";
 import CreatePost from "./pages/createpost/CreatePost";
 import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
+import PostImage from "./pages/postimage/PostImage";
+import PostVideo from "./pages/postvideo/PostVideo";
 
 const App = () => {
   const { auth_state, auth_dispatch } = React.useContext(AuthContext);
@@ -41,6 +43,8 @@ const App = () => {
           <Route exact path="/" component={Home} />
           <Route path="/create_post" component={CreatePost} />
           <Route path="/profile" component={Profile} />
+          <Route path="/post_image" component={PostImage} />
+          <Route path="/post_video" component={PostVideo} />
         </Switch>
       ) : (
         <Switch>
