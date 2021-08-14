@@ -35,3 +35,7 @@ export const OptionsContainer = styled.div`
   margin-top: 20px;
   font-weight: bold;
 `;
+//For choosing image and video
+export const FileInput = styled.input`
+  display: none;
+`;
