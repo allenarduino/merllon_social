@@ -2,11 +2,11 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { AuthContext } from "./contexts/AuthContextProvider";
 import BottomTab from "./components/BottomTab/BottomTab";
+import DeskTopHeader from "./components/DeskTopHeader/DeskTopHeader";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import CreatePost from "./pages/createpost/CreatePost";
 import Home from "./pages/home/Home";
-import Header from "./components/Header/Header";
 import Profile from "./pages/profile/Profile";
 
 const App = () => {
@@ -32,6 +32,7 @@ const App = () => {
     <Router>
       {auth_state.isLoggedIn ? (
         <React.Fragment>
+          <DeskTopHeader />
           <BottomTab />
         </React.Fragment>
       ) : null}

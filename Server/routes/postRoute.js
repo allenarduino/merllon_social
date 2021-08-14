@@ -45,14 +45,17 @@ router.post("/create_post", type, auth, function(req, res) {
 // For displaying posts on homepage
 
 router.get("/posts", auth, (req, res) => {
-  user_id = req.user_id;
-  const sql = `SELECT  p_id,post_caption,post_media,is_video,owner_id,u.full_name,u.user_img,u.user_id,
-  (SELECT post_liker FROM post_likes pl WHERE pl.post_liker=? AND pl.L_post_id=p.p_id) as post_liker,
+  const user_id = req.user_id;
+  const sql = `
+  SELECT  p_id,post_caption,post_media,owner_id,u.full_name,u.user_img,u.user_id,is_video,
+  (SELECT post_liker FROM post_likes pl WHERE pl.post_liker=${user_id} AND pl.L_post_id=p.p_id) as post_liker,
   (SELECT COUNT(*) FROM post_comments WHERE p.p_id=post_comments.C_post_id )as total_comments,
   (SELECT COUNT(*) FROM post_likes WHERE p.p_id=post_likes.L_post_id) as total_likes
   FROM posts p,users u WHERE u.user_id=p.owner_id  ORDER BY p.p_id DESC;
-  SELECT* FROM users WHERE user_id=?`;
-  db.query(sql, [user_id, user_id], function(err, data) {
+  SELECT* FROM users WHERE user_id=${user_id}
+  `;
+  db.query(sql, function(err, data) {
+    console.log(err);
     res.status(200).json({ posts: data[0], user: data[1] });
   });
 });

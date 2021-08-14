@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 export const HeaderDesign = styled.header`
+  @media (max-width: ${769}px) {
+    display: none;
+  }
   width: 100%;
   padding-top: 20px;
   padding-bottom: 20px;

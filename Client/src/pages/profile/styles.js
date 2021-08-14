@@ -4,8 +4,9 @@ import styled from "styled-components";
 export const MainContainer = styled.main`
   display: flex;
   flex: 1;
-  margin-top: 50px;
   margin-bottom: 80px;
+  margin: 0 auto;
+  justify-content: center;
 `;
 
 //Container for posts and side nav
@@ -14,6 +15,40 @@ export const ContentConatainer = styled.section`
   max-width: 934px;
   padding: 0 0 8px;
   margin: 0 auto;
+`;
+
+//Container for User profile picture
+export const ProfileContainer = styled.div`
+  width: 100%;
+  max-width: 614px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const CoverPhoto = styled.img`
+  width: 100%;
+  height: 50vh;
+  border-bottom-left-radius: 50% 40%;
+`;
+
+export const UserImg = styled.img`
+  height: 80px;
+  width: 80px;
+  border-radius: 80px;
+  align-self: center;
+  margin-top: -40px;
+`;
+
+export const FullName = styled.h4`
+  font-weight: 900;
+  align-self: center;
+  font-size: 20px;
+`;
+
+export const Bio = styled.b`
+  align-self: center;
+  margin-top: -10px;
 `;
 
 //conatainer for posts except side nav

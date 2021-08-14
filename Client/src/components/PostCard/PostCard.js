@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/core";
 import { ThemeContext } from "../../contexts/ThemeContextProvider";
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import { PostContext } from "../../contexts/PostContextProvider";
+import { ProfileContext } from "../../contexts/ProfileContextProvider";
 import {
   UserImageWrapper,
   UserImage,
@@ -58,6 +59,7 @@ const PostCard = ({ post }) => {
   const { theme_state } = React.useContext(ThemeContext);
   const { auth_state } = React.useContext(AuthContext);
   const { post_state, post_dispatch } = React.useContext(PostContext);
+  const { profile_state, profile_dispatch } = React.useContext(ProfileContext);
   //For handling heart animation
   const [pulse, setPulse] = React.useState(false);
   let url = auth_state.url;
@@ -85,7 +87,15 @@ const PostCard = ({ post }) => {
         : p
     );
 
+    //For user profile posts
+    const newProfilePost = profile_state.user_posts.map(p =>
+      p.p_id === id
+        ? { ...p, post_liker: user_id, total_likes: p.total_likes + 1 }
+        : p
+    );
+
     post_dispatch({ type: "FETCH_POSTS", payload: newPost });
+    profile_dispatch({ type: "FETCH_USER_POSTS", payload: newProfilePost });
 
     //Sending like details to server
     let myHeaders = new Headers();
@@ -109,7 +119,15 @@ const PostCard = ({ post }) => {
         : p
     );
 
+    //For handling user profile posts
+    const newProfilePost = profile_state.user_posts.map(p =>
+      p.p_id === id
+        ? { ...p, post_liker: null, total_likes: p.total_likes - 1 }
+        : p
+    );
+
     post_dispatch({ type: "FETCH_POSTS", payload: newPost });
+    profile_dispatch({ type: "FETCH_USER_POSTS", payload: newProfilePost });
 
     //Sending like details to server
     let myHeaders = new Headers();

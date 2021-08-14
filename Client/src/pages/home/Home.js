@@ -5,7 +5,7 @@ import { AuthContext } from "../../contexts/AuthContextProvider";
 import { Fade } from "react-reveal";
 import Loader from "../../components/Loader/Loader";
 import PostCard from "../../components/PostCard/PostCard";
-import Header from "../../components/Header/Header";
+import MobileHeader from "../../components/MobileHeader/MobileHeader";
 import jwt_decode from "jwt-decode";
 
 import {
@@ -47,7 +47,7 @@ const Home = () => {
   }, [auth_state.token, post_state.token]);
   return (
     <div>
-      <Header />
+      <MobileHeader />
       <MainContainer>
         <ContentConatainer>
           {post_state.posts.length == 0 ? (

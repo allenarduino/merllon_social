@@ -6,6 +6,16 @@ import Loader from "../../components/Loader/Loader";
 import PostCard from "../../components/PostCard/PostCard";
 import { Fade } from "react-reveal";
 import jwt_decode from "jwt-decode";
+import {
+  MainContainer,
+  ContentConatainer,
+  ProfileContainer,
+  CoverPhoto,
+  UserImg,
+  FullName,
+  Bio,
+  PostsContainer
+} from "./styles";
 
 const Profile = () => {
   const { auth_state, auth_dispatch } = React.useContext(AuthContext);
@@ -34,13 +44,31 @@ const Profile = () => {
   };
   React.useEffect(() => {
     fetch_user();
-  });
+  }, []);
   return (
-    <div>
-      {profile_state.profile.map(profile => (
-        <div>{profile.full_name}</div>
-      ))}
-    </div>
+    <MainContainer>
+      {profile_state.profile.length == 0 ? (
+        <Loader />
+      ) : (
+        <Fade bottom duration={900} distance="40px">
+          <ContentConatainer>
+            {profile_state.profile.map(profile => (
+              <ProfileContainer>
+                <CoverPhoto src={`${url}/${profile.coverphoto}`} />
+                <UserImg src={`${url}/${profile.user_img}`} />
+                <FullName>{profile.full_name}</FullName>
+                <Bio>{profile.bio}</Bio>
+              </ProfileContainer>
+            ))}
+            {profile_state.user_posts.map(post => (
+              <PostsContainer>
+                <PostCard post={post} />
+              </PostsContainer>
+            ))}
+          </ContentConatainer>
+        </Fade>
+      )}
+    </MainContainer>
   );
 };
 export default Profile;
