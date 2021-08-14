@@ -7,12 +7,15 @@ import PostContext from "./contexts/PostContextProvider";
 import AuthContext from "./contexts/AuthContextProvider";
 import ThemeContext from "./contexts/ThemeContextProvider";
 import ProfileContext from "./contexts/ProfileContextProvider";
+import SelectMediaContext from "./contexts/SelectMediaContextProvider";
 ReactDOM.render(
   <PostContext>
     <AuthContext>
       <ThemeContext>
         <ProfileContext>
-          <App />
+          <SelectMediaContext>
+            <App />
+          </SelectMediaContext>
         </ProfileContext>
       </ThemeContext>
     </AuthContext>

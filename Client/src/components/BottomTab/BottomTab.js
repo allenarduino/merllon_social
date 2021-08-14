@@ -3,31 +3,31 @@ import { useLocation, Link, useHistory } from "react-router-dom";
 import { BottomNav, BnTab, OptionsContainer, FileInput } from "./styles";
 import * as Icon from "react-feather";
 import Sheet from "react-modal-sheet";
+import { SelectMediaContext } from "../../contexts/SelectMediaContextProvider";
 
 const BottomTab = props => {
   const location = useLocation();
   const history = useHistory();
   const [isOpen, setOpen] = React.useState(false);
-  const [post_media, setPostMedia] = React.useState(null);
-  const [imgPreview, setImgPreview] = React.useState(null);
-  const [videoPreview, setVideoPreview] = React.useState(null);
+
+  const { media_dispatch } = React.useContext(SelectMediaContext);
 
   const handle_image_change = e => {
-    setImgPreview(URL.createObjectURL(e.target.files[0]));
-    setPostMedia(e.target.files[0]);
-    history.push("/post_image", {
-      post_media: post_media,
-      imgPreview: imgPreview
+    media_dispatch({
+      type: "SELECTED",
+      payload1: URL.createObjectURL(e.target.files[0]),
+      payload2: e.target.files[0]
     });
+    history.push("/post_image");
     setOpen(false);
   };
 
   const handle_video_change = e => {
-    setVideoPreview(URL.createObjectURL(e.target.files[0]));
-    setPostMedia(e.target.files[0]);
-    history.push("/post_video", {
-      post_media: post_media,
-      videoPreview: videoPreview
+    history.push("/post_video");
+    media_dispatch({
+      type: "SELECTED",
+      payload1: URL.createObjectURL(e.target.files[0]),
+      payload2: e.target.files[0]
     });
     setOpen(false);
   };
@@ -93,6 +93,7 @@ const BottomTab = props => {
                 <OptionsContainer>
                   <FileInput
                     type="file"
+                    value={post_media}
                     required
                     onChange={handle_image_change}
                     accept="image/x-png,image/jpeg,image/jpg"
@@ -104,6 +105,7 @@ const BottomTab = props => {
                 <OptionsContainer>
                   <FileInput
                     type="file"
+                    value={post_media}
                     required
                     onChange={handle_video_change}
                     accept="video/mp4,video/x-m4v,video/mp3,video/*"
