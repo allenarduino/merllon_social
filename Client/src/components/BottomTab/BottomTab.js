@@ -93,7 +93,6 @@ const BottomTab = props => {
                 <OptionsContainer>
                   <FileInput
                     type="file"
-                    value={post_media}
                     required
                     onChange={handle_image_change}
                     accept="image/x-png,image/jpeg,image/jpg"
@@ -105,7 +104,6 @@ const BottomTab = props => {
                 <OptionsContainer>
                   <FileInput
                     type="file"
-                    value={post_media}
                     required
                     onChange={handle_video_change}
                     accept="video/mp4,video/x-m4v,video/mp3,video/*"
