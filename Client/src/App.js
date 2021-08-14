@@ -5,7 +5,6 @@ import BottomTab from "./components/BottomTab/BottomTab";
 import DeskTopHeader from "./components/DeskTopHeader/DeskTopHeader";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
-import CreatePost from "./pages/createpost/CreatePost";
 import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
 import PostImage from "./pages/postimage/PostImage";
@@ -41,7 +40,6 @@ const App = () => {
       {auth_state.isLoggedIn ? (
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/create_post" component={CreatePost} />
           <Route path="/profile" component={Profile} />
           <Route path="/post_image" component={PostImage} />
           <Route path="/post_video" component={PostVideo} />

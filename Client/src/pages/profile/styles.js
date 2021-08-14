@@ -38,6 +38,7 @@ export const UserImg = styled.img`
   border-radius: 80px;
   align-self: center;
   margin-top: -40px;
+  border: 2px solid white;
 `;
 
 export const FullName = styled.h4`

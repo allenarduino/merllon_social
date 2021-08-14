@@ -114,7 +114,7 @@ const BottomTab = props => {
             </Sheet.Content>
           </Sheet.Container>
 
-          <Sheet.Backdrop onClick={() => setOpen(false)} onDrag />
+          <Sheet.Backdrop onClick={() => setOpen(false)} />
         </Sheet>
       </BottomNav>
     </div>

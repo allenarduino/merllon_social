@@ -4,15 +4,7 @@ export const CenterInput = styled.div`
   max-width: 614px;
   display: flex;
   flex-direction: column;
-  margin-top: 100px;
-`;
-
-export const MyImage = styled.img`
-  height: 250px;
-  width: 100%;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  margin: 0;
+  margin-top: 80px;
 `;
 
 export const InputField = styled.textarea`
