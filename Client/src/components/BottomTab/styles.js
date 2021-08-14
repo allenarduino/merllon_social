@@ -26,3 +26,12 @@ export const BnTab = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+//Continer for options on bottomModal
+export const OptionsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 20px;
+  font-weight: bold;
+`;
