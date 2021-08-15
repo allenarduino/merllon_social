@@ -1,6 +1,7 @@
 import React from "react";
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import { ProfileContext } from "../../contexts/ProfileContextProvider";
+import { useHistory } from "react-router-dom";
 
 import Loader from "../../components/Loader/Loader";
 import PostCard from "../../components/PostCard/PostCard";
@@ -14,10 +15,12 @@ import {
   UserImg,
   FullName,
   Bio,
-  PostsContainer
+  PostsContainer,
+  EditProfileButton
 } from "./styles";
 
 const Profile = () => {
+  const history = useHistory();
   const { auth_state, auth_dispatch } = React.useContext(AuthContext);
   const { profile_state, profile_dispatch } = React.useContext(ProfileContext);
   let url = auth_state.url;
@@ -58,6 +61,9 @@ const Profile = () => {
                 <UserImg src={`${url}/${profile.user_img}`} />
                 <FullName>{profile.full_name}</FullName>
                 <Bio>{profile.bio}</Bio>
+                <EditProfileButton onClick={() => history.push("/editprofile")}>
+                  Edit Profile
+                </EditProfileButton>
               </ProfileContainer>
             ))}
             {profile_state.user_posts.map(post => (

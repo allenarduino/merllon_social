@@ -54,9 +54,11 @@ const Home = () => {
             <Loader />
           ) : (
             post_state.posts.map(post => (
-              <PostsContainer>
-                <PostCard post={post} />
-              </PostsContainer>
+              <Fade bottom duration={900} distance="40px">
+                <PostsContainer>
+                  <PostCard post={post} />
+                </PostsContainer>
+              </Fade>
             ))
           )}
 
