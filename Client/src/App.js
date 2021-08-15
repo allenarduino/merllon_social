@@ -42,7 +42,7 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/profile" component={Profile} />
-          <Route patch="/editprofile" component={EditProfile} />
+          <Route path="/editprofile" component={EditProfile} />
           <Route path="/post_image" component={PostImage} />
           <Route path="/post_video" component={PostVideo} />
         </Switch>

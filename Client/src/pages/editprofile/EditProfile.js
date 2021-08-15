@@ -67,7 +67,6 @@ const EditProfile = () => {
               <label style={{ alignSelf: "flex-end", marginRight: 10 }}>
                 <FileInput
                   type="file"
-                  required
                   onChange={handle_coverphoto_change}
                   accept="image/x-png,image/jpeg,image/jpg"
                 />
@@ -83,7 +82,6 @@ const EditProfile = () => {
               <label style={{ alignSelf: "center", marginTop: -10 }}>
                 <FileInput
                   type="file"
-                  required
                   onChange={handle_user_img_change}
                   accept="image/x-png,image/jpeg,image/jpg"
                 />

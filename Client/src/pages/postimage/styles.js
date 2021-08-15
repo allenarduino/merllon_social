@@ -23,6 +23,9 @@ export const InputField = styled.textarea`
 `;
 
 export const SubmitButton = styled.button`
+  @media (max-width: ${769}px) {
+    display: none;
+  }
   width: 320px;
   padding-left: 20px;
   font-size: 15px;
