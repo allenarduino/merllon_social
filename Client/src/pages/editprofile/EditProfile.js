@@ -13,7 +13,9 @@ import {
   NameInput,
   BioInput,
   SaveButton,
-  FileInput
+  FileInput,
+  InputContainer,
+  BioInputContainer
 } from "./styles";
 
 const EditProfile = () => {
@@ -25,6 +27,10 @@ const EditProfile = () => {
   const [user_img_selected, setUserImgSelected] = React.useState(false);
   const [name, setName] = React.useState("");
   const [bio, setBio] = React.useState("");
+  const [loadingUser_img, controlUserImageLoading] = React.useState(false);
+  const [loadingCoverphoto, controlCoverphotoLoading] = React.useState(false);
+  const [loadingName, controlNameLoading] = React.useState(false);
+  const [loadingBio, controlBioLoading] = React.useState(false);
   const { auth_state, auth_dispatch } = React.useContext(AuthContext);
   const { profile_state, profile_dispatch } = React.useContext(ProfileContext);
   let url = auth_state.url;
@@ -51,6 +57,117 @@ const EditProfile = () => {
     setUserImgSelected(true);
   };
 
+  const update_coverphoto = () => {
+    controlCoverphotoLoading(true);
+
+    const data = new FormData();
+    data.append("coverphoto", coverphoto);
+
+    let myHeaders = new Headers();
+    myHeaders.append(
+      "x-access-token",
+      auth_state.token || localStorage.getItem("token")
+    );
+    fetch(`${url}/update_coverphoto`, {
+      method: "POST",
+      body: data,
+      headers: myHeaders
+    })
+      .then(res => res.json())
+      .then(data => {
+        controlCoverphotoLoading(false);
+        alert("Coverphoto updated");
+      })
+      .catch(err => {
+        controlCoverphotoLoading(false);
+        alert(err);
+      });
+  };
+
+  const update_user_img = () => {
+    controlUserImageLoading(true);
+
+    const data = new FormData();
+    data.append("user_img", user_img);
+
+    let myHeaders = new Headers();
+    myHeaders.append(
+      "x-access-token",
+      auth_state.token || localStorage.getItem("token")
+    );
+    fetch(`${url}/update_user_img`, {
+      method: "POST",
+      body: data,
+      headers: myHeaders
+    })
+      .then(res => res.json())
+      .then(data => {
+        controlUserImageLoading(false);
+
+        alert("Profile Photo Updated");
+      })
+      .catch(err => {
+        controlUserImageLoading(false);
+        alert(err);
+      });
+  };
+
+  const update_name = () => {
+    if (name == "") {
+      alert("Name must not be empty");
+    } else {
+      controlNameLoading(true);
+      const myHeaders = new Headers();
+      myHeaders.append(
+        "x-access-token",
+        auth_state.token || localStorage.getItem("token")
+      );
+      myHeaders.append("Content-Type", "application/json");
+      fetch(`${url}/update_name`, {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify({ name: name })
+      })
+        .then(res => res.json())
+        .then(data => {
+          controlNameLoading(false);
+          alert(data.message);
+        })
+        .catch(err => {
+          console.log(err);
+          controlNameLoading(false);
+        });
+    }
+  };
+
+  const update_bio = () => {
+    if (bio == "") {
+      alert("Your bio must not be empty");
+    } else {
+      controlBioLoading(true);
+      const myHeaders = new Headers();
+      myHeaders.append(
+        "x-access-token",
+        auth_state.token || localStorage.getItem("token")
+      );
+      myHeaders.append("Content-Type", "application/json");
+      fetch(`${url}/update_bio`, {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify({ bio: bio })
+      })
+        .then(res => res.json())
+        .then(data => {
+          controlBioLoading(false);
+          alert(data.message);
+        })
+        .catch(err => {
+          console.log(err);
+          controlBioLoading(false);
+        });
+    }
+  };
+
   return (
     <MainContainer>
       <Fade bottom duration={900} distance="40px">
@@ -72,6 +189,18 @@ const EditProfile = () => {
                 />
                 <Icon.Camera />
               </label>
+              <label style={{ alignSelf: "flex-end", marginTop: 10 }}>
+                {coverphoto_selected ? (
+                  !loadingCoverphoto ? (
+                    <Icon.CheckCircle
+                      style={{ marginRight: 10 }}
+                      onClick={() => update_coverphoto()}
+                    />
+                  ) : (
+                    <div>Loading...</div>
+                  )
+                ) : null}
+              </label>
               <UserImg
                 src={
                   user_img_selected
@@ -87,20 +216,47 @@ const EditProfile = () => {
                 />
                 <Icon.Camera />
               </label>
+              <label style={{ alignSelf: "center", marginTop: 10 }}>
+                {!user_img_selected ? null : !loadingUser_img ? (
+                  <Icon.CheckCircle onClick={() => update_user_img()} />
+                ) : (
+                  <div>Loading...</div>
+                )}
+              </label>
 
-              <NameInput
-                placeholder={profile.full_name}
-                className="form-control"
-                onChange={handle_name_change}
-                value={name}
-              />
-              <BioInput
-                placeholder={profile.bio}
-                className="form-control"
-                onChange={handle_bio_change}
-                value={bio}
-              />
-              <SaveButton>Save</SaveButton>
+              <InputContainer>
+                <NameInput
+                  placeholder={profile.full_name}
+                  className="form-control"
+                  onChange={handle_name_change}
+                  value={name}
+                />
+                {!loadingName ? (
+                  <Icon.CheckCircle
+                    onClick={() => update_name()}
+                    style={{ marginTop: 20, marginLeft: 10 }}
+                  />
+                ) : (
+                  <div>Loading...</div>
+                )}
+              </InputContainer>
+
+              <BioInputContainer>
+                <BioInput
+                  placeholder={profile.bio}
+                  className="form-control"
+                  onChange={handle_bio_change}
+                  value={bio}
+                />
+                {!loadingBio ? (
+                  <Icon.CheckCircle
+                    onClick={() => update_bio()}
+                    style={{ marginTop: 20, marginLeft: 10 }}
+                  />
+                ) : (
+                  <div>Loading..</div>
+                )}
+              </BioInputContainer>
             </ProfileContainer>
           ))}
         </ContentConatainer>

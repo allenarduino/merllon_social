@@ -54,6 +54,7 @@ const Login = () => {
       .then(data => {
         if (data.error == null) {
           auth_dispatch({ type: "LOGIN", payload: data });
+          history.push("/");
         } else {
           setError(data.error);
           controlLoading(false);

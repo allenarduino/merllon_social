@@ -57,25 +57,29 @@ export const NameInput = styled.input`
 `;
 
 export const BioInput = styled.textarea`
-  width: 250px;
   align-self: center;
   padding-left: 20px;
+  padding-top: 10px;
   height: 40px;
   margin-top: 20px;
   border-radius: 10px;
   border: 1px solid #3333;
+  width: 250px;
 `;
 
-export const SaveButton = styled.button`
+export const InputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
   width: 250px;
-  padding-left: 20px;
-  font-size: 15px;
-  font-weight: bold;
-  height: 40px;
-  margin-top: 20px;
-  border-radius: 20px;
-  color: #fff;
-  border: 2px solid #e3405f;
-  background-color: #e3405f;
   align-self: center;
+  height: 40px;
+`;
+
+export const BioInputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 250px;
+  align-self: center;
+  height: 50px;
+  margin-top: 20px;
 `;
