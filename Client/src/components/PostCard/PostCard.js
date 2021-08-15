@@ -6,6 +6,7 @@ import jwt_decode from "jwt-decode";
 import * as Icon from "react-feather";
 import ReactPlayer from "react-player";
 import { makeStyles } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 import { ThemeContext } from "../../contexts/ThemeContextProvider";
 import { AuthContext } from "../../contexts/AuthContextProvider";
@@ -55,6 +56,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PostCard = ({ post }) => {
+  const history = useHistory();
   const classes = useStyles();
   const { theme_state } = React.useContext(ThemeContext);
   const { auth_state } = React.useContext(AuthContext);
@@ -161,7 +163,12 @@ const PostCard = ({ post }) => {
 
   return (
     <PostCardDesign>
-      <UserImage src={`${url}/${post.user_img}`} />
+      <UserImage
+        src={`${url}/${post.user_img}`}
+        onClick={() =>
+          history.push("/singleprofile", { user_id: post.owner_id })
+        }
+      />
       <PostCardContent>
         <Line1>
           <LineBox>
@@ -230,8 +237,9 @@ const PostCard = ({ post }) => {
               }}
             />
           )}
-          <b style={{ fontSize: 18, marginLeft: -10 }}>{post.total_likes}</b>
+          <b style={{ fontSize: 18 }}>{post.total_likes}</b>
           <Icon.MessageCircle />
+          <b style={{ fontSize: 18 }}>{post.total_comments}</b>
         </Line4>
       </PostCardContent>
     </PostCardDesign>

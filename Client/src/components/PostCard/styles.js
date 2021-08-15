@@ -114,7 +114,7 @@ export const Line4 = styled.div`
   font-size: 13px;
   display: flex;
   flex-direction: row;
-  width: 100px;
+  width: 130px;
   justify-content: space-around;
   margin-top: 10px;
   padding-bottom: 10px;

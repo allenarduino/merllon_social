@@ -10,6 +10,7 @@ import Profile from "./pages/profile/Profile";
 import PostImage from "./pages/postimage/PostImage";
 import PostVideo from "./pages/postvideo/PostVideo";
 import EditProfile from "./pages/editprofile/EditProfile";
+import SingleProfile from "./pages/singleprofile/SingleProfile";
 
 const App = () => {
   const { auth_state, auth_dispatch } = React.useContext(AuthContext);
@@ -45,6 +46,7 @@ const App = () => {
           <Route path="/editprofile" component={EditProfile} />
           <Route path="/post_image" component={PostImage} />
           <Route path="/post_video" component={PostVideo} />
+          <Route path="/singleprofile" component={SingleProfile} />
         </Switch>
       ) : (
         <Switch>
