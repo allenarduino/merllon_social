@@ -142,6 +142,23 @@ const PostCard = ({ post }) => {
     // .catch(err=>alert(err))
   };
 
+  const delete_post = id => {
+    post_dispatch({ type: "DELETE_POST", payload: id });
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    const data = { post_id: id };
+    fetch(`${url}/delete_post`, {
+      method: "DELETE",
+      body: JSON.stringify(data),
+      headers: myHeaders
+    })
+      .then(res => res.json())
+      .then(data => {
+        // alert(data.message);
+      })
+      .catch(err => console.log(err));
+  };
+
   return (
     <PostCardDesign>
       <UserImage src={`${url}/${post.user_img}`} />
@@ -163,7 +180,9 @@ const PostCard = ({ post }) => {
               {moment(post.created_at).twitterShort()}
             </Date>
           </LineBox>
-          <Icon.Trash />
+          {post.owner_id == user_id ? (
+            <Icon.Trash onClick={() => delete_post(post.p_id)} />
+          ) : null}
         </Line1>
         <Line2
           style={{

@@ -1,6 +1,6 @@
 import React from "react";
 import CreatePostHeader from "../../components/CreatePostHeader/CreatePostHeader";
-import { MyImage, CenterInput, InputField } from "./styles";
+import { MyImage, CenterInput, InputField, SubmitButton } from "./styles";
 import { useHistory } from "react-router-dom";
 import { SelectMediaContext } from "../../contexts/SelectMediaContextProvider";
 import { AuthContext } from "../../contexts/AuthContextProvider";
@@ -56,6 +56,11 @@ const PostImage = () => {
           name="post_caption"
         />
         <MyImage src={media_state.mediaPreview} />
+        {loading ? (
+          <SubmitButton>Loading...</SubmitButton>
+        ) : (
+          <SubmitButton onClick={() => create_post()}>Submit</SubmitButton>
+        )}
       </CenterInput>
     </div>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation, Link, useHistory } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { BottomNav, BnTab, OptionsContainer, FileInput } from "./styles";
 import * as Icon from "react-feather";
 import Sheet from "react-modal-sheet";

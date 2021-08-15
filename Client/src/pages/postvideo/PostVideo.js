@@ -1,6 +1,6 @@
 import React from "react";
 import CreatePostHeader from "../../components/CreatePostHeader/CreatePostHeader";
-import { CenterInput, InputField } from "./styles";
+import { CenterInput, InputField, SubmitButton } from "./styles";
 import { SelectMediaContext } from "../../contexts/SelectMediaContextProvider";
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import ReactPlayer from "react-player";
@@ -56,7 +56,7 @@ const PostVideo = () => {
           value={post_caption}
           name="post_caption"
         />
-        <div style={{ height: 200, borderRadius: 10 }}>
+        <div style={{ height: 200 }}>
           <ReactPlayer
             url={media_state.mediaPreview}
             style={{ top: 0 }}
@@ -64,6 +64,13 @@ const PostVideo = () => {
             width="100%"
             height="100%"
           />
+        </div>
+        <div style={{ alignSelf: "center" }}>
+          {loading ? (
+            <SubmitButton>loading...</SubmitButton>
+          ) : (
+            <SubmitButton onClick={() => create_post()}>Submit</SubmitButton>
+          )}
         </div>
       </CenterInput>
     </div>
