@@ -44,7 +44,7 @@ const Home = () => {
 
   React.useEffect(() => {
     fetch_posts();
-  }, [auth_state.token, post_state.token]);
+  }, []);
   return (
     <div>
       <HomeHeader />

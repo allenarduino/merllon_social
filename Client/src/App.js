@@ -11,6 +11,7 @@ import PostImage from "./pages/postimage/PostImage";
 import PostVideo from "./pages/postvideo/PostVideo";
 import EditProfile from "./pages/editprofile/EditProfile";
 import SingleProfile from "./pages/singleprofile/SingleProfile";
+import ScrollToTop from "./ScrollToTop";
 
 const App = () => {
   const { auth_state, auth_dispatch } = React.useContext(AuthContext);
@@ -33,6 +34,7 @@ const App = () => {
   }, []);
   return (
     <Router>
+      <ScrollToTop />
       {auth_state.isLoggedIn ? (
         <React.Fragment>
           <DeskTopHeader />

@@ -146,6 +146,7 @@ const PostCard = ({ post }) => {
 
   const delete_post = id => {
     post_dispatch({ type: "DELETE_POST", payload: id });
+    profile_dispatch({ type: "DELETE_POST", payload: id });
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     const data = { post_id: id };

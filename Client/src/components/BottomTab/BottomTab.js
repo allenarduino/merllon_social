@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory, Link } from "react-router-dom";
 import { BottomNav, BnTab, OptionsContainer, FileInput } from "./styles";
 import * as Icon from "react-feather";
 import Sheet from "react-modal-sheet";
@@ -37,19 +37,18 @@ const BottomTab = props => {
       <BottomNav>
         <BnTab>
           {location.pathname === "/" ? (
-            <Icon.Home
-              onClick={() => history.push("/")}
-              name="home-outline"
-              className="mr-2 feedIcons"
-              color="black"
-              size={24}
-            />
+            <Link to="/" style={{ color: "black" }}>
+              <Icon.Home
+                name="home-outline"
+                className="mr-2 feedIcons"
+                color="black"
+                size={24}
+              />
+            </Link>
           ) : (
-            <Icon.Home
-              className="mr-2 feedIcons"
-              size={20}
-              onClick={() => history.push("/")}
-            />
+            <Link to="/" style={{ color: "black" }}>
+              <Icon.Home className="mr-2 feedIcons" size={20} />
+            </Link>
           )}
         </BnTab>
         <BnTab>
@@ -58,7 +57,6 @@ const BottomTab = props => {
               className="mr-2 feedIcons"
               color="black"
               size={24}
-              onClick={() => history.push("/create_post")}
             />
           ) : (
             <Icon.PlusCircle
@@ -70,18 +68,13 @@ const BottomTab = props => {
         </BnTab>
         <BnTab>
           {location.pathname === "/profile" ? (
-            <Icon.User
-              className="mr-2 feedIcons"
-              color="black"
-              size={24}
-              onClick={() => history.push("/profile")}
-            />
+            <Link to="/profile" style={{ color: "black" }}>
+              <Icon.User className="mr-2 feedIcons" color="black" size={24} />
+            </Link>
           ) : (
-            <Icon.User
-              className="mr-2 feedIcons"
-              size={20}
-              onClick={() => history.push("/profile")}
-            />
+            <Link to="/profile" style={{ color: "black" }}>
+              <Icon.User className="mr-2 feedIcons" size={20} />
+            </Link>
           )}
         </BnTab>
         {/*****************Modal*************** */}
