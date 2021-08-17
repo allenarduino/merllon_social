@@ -220,12 +220,12 @@ const PostCard = ({ post }) => {
 
           <Line3 style={{ marginTop: 15 }}>
             {post.is_video == "false" ? (
-              <ImageModal imageUrl={`${url}/${post.post_media}`} />
-            ) : (
-              /** * <img
+              /** <ImageModal imageUrl={`${url}/${post.post_media}`} />**/
+              <img
                 src={`${url}/${post.post_media}`}
                 style={{ width: "100%" }}
-              />***/
+              />
+            ) : (
               <ReactPlayer
                 url={`${url}/${post.post_media}`}
                 width="100%"
