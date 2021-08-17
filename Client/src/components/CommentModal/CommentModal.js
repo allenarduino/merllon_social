@@ -36,6 +36,12 @@ const CommentModal = props => {
 
   const create_comment = e => {
     e.preventDefault();
+    /**  if (comment == "") {
+      return;
+    } else {
+      setComments([...comments, comment]);
+      setComment("");
+    }**/
     setComments([...comments, comment]);
   };
   return (
@@ -47,6 +53,7 @@ const CommentModal = props => {
             {comments.map(comment => (
               <CommentCard comment={comment} />
             ))}
+
             <FormContainer onSubmit={create_comment}>
               <CommentInput
                 placeholder="Write Commment"

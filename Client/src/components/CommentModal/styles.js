@@ -36,18 +36,20 @@ export const PostImage = styled.img`
 
 export const RightSide = styled.div`
   width: 60%;
-  display: flex;
-  align-self: flex-end;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  align-self: flex-end;
+  overflow-y: scroll;
 `;
-
 export const FormContainer = styled.form`
+  width: 100%;
   display: flex;
   flex-direction: row;
-  width: 100%;
   height: 50px;
+  bottom: 0;
+  margin-top: auto;
+  position: sticky;
 `;
 
 export const CommentInput = styled.textarea`
