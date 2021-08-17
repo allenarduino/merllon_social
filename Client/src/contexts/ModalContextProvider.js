@@ -5,7 +5,10 @@ export const ModalContext = React.createContext();
 const initialState = {
   modal_open: false,
   post_id: null,
-  post_media: null
+  post_media: null,
+  owner_id: null,
+  full_name: null,
+  is_video: ""
 };
 
 const ModalContextProvider = props => {

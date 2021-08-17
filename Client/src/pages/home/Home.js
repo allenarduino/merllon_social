@@ -84,6 +84,8 @@ const Home = () => {
             close_modal={close_modal}
             post_id={modal_state.post_id}
             post_media={modal_state.post_media}
+            is_video={modal_state.is_video}
+            full_name={modal_state.full_name}
           />
         ) : null}
       </MainContainer>

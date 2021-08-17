@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment-twitter";
 import Linkify from "react-linkify";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   CommentCardDesign,
   UserImage,
@@ -18,10 +18,14 @@ import {
 
 import { ThemeContext } from "../../contexts/ThemeContextProvider";
 import { AuthContext } from "../../contexts/AuthContextProvider";
+import { ModalContext } from "../../contexts/ModalContextProvider";
 
 const CommentCard = ({ comment }) => {
+  const history = useHistory();
   const { theme_state } = React.useContext(ThemeContext);
   const { auth_state } = React.useContext(AuthContext);
+  const { modal_state } = React.useContext(ModalContext);
+
   let url = auth_state.url;
   return (
     <CommentCardDesign
@@ -34,9 +38,10 @@ const CommentCard = ({ comment }) => {
         <Line1>
           <Line1Box>
             <UserName
-              style={{
+              /*style={{
                 color: theme_state.typoMain
-              }}
+              }}*/
+              style={{ color: "black" }}
             >
               {comment.full_name}
             </UserName>
@@ -50,8 +55,12 @@ const CommentCard = ({ comment }) => {
           >
             <Line2Text>
               Replying to
-              <Link
-                to="/singleprofile"
+              <span
+                onClick={() =>
+                  history.push("/singleprofile", {
+                    user_id: modal_state.owner_id
+                  })
+                }
                 style={{
                   color: theme_state.mainColor
                 }}
@@ -60,15 +69,15 @@ const CommentCard = ({ comment }) => {
                   {"@"}
                   {comment.full_name}
                 </Line2AuthorName>
-              </Link>
+              </span>
             </Line2Text>
           </Line2Box>
           <Line2Content
             style={{
-              color: theme_state.typoMain
+              color: "black"
             }}
           >
-            <Linkify>{comment.comment_text}</Linkify>
+            <Linkify>{comment.text}</Linkify>
           </Line2Content>
         </Line2>
       </Content>

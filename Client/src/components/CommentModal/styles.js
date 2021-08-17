@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 export const CommentModalDesign = styled.div`
+  @media (max-width: ${769}px) {
+    display: none;
+  }
   position: fixed;
   top: 0;
   left: 0;
@@ -26,6 +29,14 @@ export const MainModal = styled.div`
 `;
 
 export const PostImage = styled.img`
+  width: 40%;
+  height: 100%;
+  display: flex;
+  align-self: flex-start;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+`;
+export const PostVideo = styled.video`
   width: 40%;
   height: 100%;
   display: flex;

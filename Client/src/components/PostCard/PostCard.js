@@ -166,8 +166,15 @@ const PostCard = ({ post }) => {
       .catch(err => console.log(err));
   };
 
-  const open_modal = (id, post_media) => {
-    modal_dispatch({ type: "OPEN_MODAL", payload1: id, payload2: post_media });
+  const open_modal = (id, post_media, owner_id, full_name, is_video) => {
+    modal_dispatch({
+      type: "OPEN_MODAL",
+      payload1: id,
+      payload2: post_media,
+      payload3: owner_id,
+      payload4: full_name,
+      payload5: is_video
+    });
   };
 
   return (
@@ -215,6 +222,10 @@ const PostCard = ({ post }) => {
             {post.is_video == "false" ? (
               <ImageModal imageUrl={`${url}/${post.post_media}`} />
             ) : (
+              /** * <img
+                src={`${url}/${post.post_media}`}
+                style={{ width: "100%" }}
+              />***/
               <ReactPlayer
                 url={`${url}/${post.post_media}`}
                 width="100%"
@@ -251,7 +262,15 @@ const PostCard = ({ post }) => {
             )}
             <b style={{ fontSize: 18 }}>{post.total_likes}</b>
             <Icon.MessageCircle
-              onClick={() => open_modal(post.p_id, post.post_media)}
+              onClick={() =>
+                open_modal(
+                  post.p_id,
+                  post.post_media,
+                  post.owner_id,
+                  post.full_name,
+                  post.is_video
+                )
+              }
             />
             <b style={{ fontSize: 18 }}>{post.total_comments}</b>
           </Line4>
