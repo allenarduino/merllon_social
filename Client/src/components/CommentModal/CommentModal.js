@@ -36,13 +36,12 @@ const CommentModal = props => {
 
   const create_comment = e => {
     e.preventDefault();
-    /**  if (comment == "") {
+    if (comment == "") {
       return;
     } else {
       setComments([...comments, comment]);
       setComment("");
-    }**/
-    setComments([...comments, comment]);
+    }
   };
   return (
     <div>
