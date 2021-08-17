@@ -36,12 +36,17 @@ export const SideNav = styled.section`
   top: 84px;
   transform: translateX(calc(-50% + 322px));
   flex-direction: column;
-  box-shadow: 0px 0px 2px;
   width: 30vw;
   height: 40vh;
   display: flex;
   align-items: center;
+  align-self: flex-end;
   border-radius: 20px;
+  box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+  -o-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+  -ms-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
 `;
 
 export const Avatar = styled.img`

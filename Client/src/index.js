@@ -8,13 +8,16 @@ import AuthContext from "./contexts/AuthContextProvider";
 import ThemeContext from "./contexts/ThemeContextProvider";
 import ProfileContext from "./contexts/ProfileContextProvider";
 import SelectMediaContext from "./contexts/SelectMediaContextProvider";
+import ModalContext from "./contexts/ModalContextProvider";
 ReactDOM.render(
   <PostContext>
     <AuthContext>
       <ThemeContext>
         <ProfileContext>
           <SelectMediaContext>
-            <App />
+            <ModalContext>
+              <App />
+            </ModalContext>
           </SelectMediaContext>
         </ProfileContext>
       </ThemeContext>

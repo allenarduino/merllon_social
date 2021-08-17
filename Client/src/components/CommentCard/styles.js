@@ -20,7 +20,7 @@ export const UserImage = styled.img`
   border-radius: 50px;
 `;
 
-export const CommentCardContent = styled.div`
+export const Content = styled.div`
   width: 100%;
   padding-left: 10px;
   overflow: hidden;
@@ -33,12 +33,11 @@ export const Line1 = styled.div`
   justify-content: space-between;
 `;
 
-export const LineBox = styled.div`
-  width: 80%;
+export const Line1Box = styled.div`
+  width: 90%;
   display: flex;
   flex-direction: row;
 `;
-
 export const UserName = styled.div`
   font-weight: 700;
   white-space: nowrap;
@@ -47,7 +46,7 @@ export const UserName = styled.div`
   margin-right: 5px;
 `;
 
-export const Date = styled.span`
+export const Time = styled.div`
   font-size: 13px;
   white-space: nowrap;
   line-height: 1.8;
@@ -59,7 +58,7 @@ export const Delete = styled.div`
   justify-content: flex-end;
 `;
 
-export const Delete_Background = styled.div`
+export const Background = styled.div`
   position: absolute;
   width: 30px;
   height: 30px;
@@ -77,13 +76,13 @@ export const Line2Box = styled.div`
   flex-direction: row;
 `;
 
-export const Text = styled.div`
+export const Line2Text = styled.div`
   font-weight: 400;
   white-space: nowrap;
   margin-right: 5px;
 `;
 
-export const AuthorName = styled.div`
+export const Line2AuthorName = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -95,12 +94,4 @@ export const Line2Content = styled.div`
   font-weight: 400;
   line-height: 1.3125;
   white-space: pre-line;
-`;
-
-export const CommentBackground = styled.div`
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  visibility: hidden;
 `;

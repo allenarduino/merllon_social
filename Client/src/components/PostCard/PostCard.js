@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import moment from "moment-twitter";
 import Linkify from "react-linkify";
 import jwt_decode from "jwt-decode";
@@ -12,6 +11,7 @@ import { ThemeContext } from "../../contexts/ThemeContextProvider";
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import { PostContext } from "../../contexts/PostContextProvider";
 import { ProfileContext } from "../../contexts/ProfileContextProvider";
+import { ModalContext } from "../../contexts/ModalContextProvider";
 import {
   UserImageWrapper,
   UserImage,
@@ -25,9 +25,11 @@ import {
   Line3,
   Line4,
   Delete,
-  HeartWrapper
+  HeartWrapper,
+  BottomSheetContainer
 } from "./styles";
 import ImageModal from "../ImageModal/ImageModal";
+import CommentModal from "../CommentModal/CommentModal";
 
 //Material UI animation  for pulsating heart
 const useStyles = makeStyles(theme => ({
@@ -62,6 +64,8 @@ const PostCard = ({ post }) => {
   const { auth_state } = React.useContext(AuthContext);
   const { post_state, post_dispatch } = React.useContext(PostContext);
   const { profile_state, profile_dispatch } = React.useContext(ProfileContext);
+  const { modal_state, modal_dispatch } = React.useContext(ModalContext);
+
   //For handling heart animation
   const [pulse, setPulse] = React.useState(false);
   let url = auth_state.url;
@@ -162,88 +166,98 @@ const PostCard = ({ post }) => {
       .catch(err => console.log(err));
   };
 
-  return (
-    <PostCardDesign>
-      <UserImage
-        src={`${url}/${post.user_img}`}
-        onClick={() =>
-          history.push("/singleprofile", { user_id: post.owner_id })
-        }
-      />
-      <PostCardContent>
-        <Line1>
-          <LineBox>
-            <UserName
-              style={{
-                color: theme_state.mobileNavIcon
-              }}
-            >
-              {post.full_name}
-            </UserName>
-            <Date
-              style={{
-                color: theme_state.typoMain
-              }}
-            >
-              {moment(post.created_at).twitterShort()}
-            </Date>
-          </LineBox>
-          {post.owner_id == user_id ? (
-            <Icon.Trash onClick={() => delete_post(post.p_id)} />
-          ) : null}
-        </Line1>
-        <Line2
-          style={{
-            color: theme_state.mobileNavIcon
-          }}
-        >
-          <Linkify>{post.post_caption}</Linkify>
-        </Line2>
+  const open_modal = (id, post_media) => {
+    modal_dispatch({ type: "OPEN_MODAL", payload1: id, payload2: post_media });
+  };
 
-        <Line3 style={{ marginTop: 15 }}>
-          {post.is_video == "false" ? (
-            <ImageModal imageUrl={`${url}/${post.post_media}`} />
-          ) : (
-            <ReactPlayer
-              url={`${url}/${post.post_media}`}
-              width="100%"
-              height="100%"
-              controls={true}
+  return (
+    <div>
+      <PostCardDesign>
+        <UserImage
+          src={`${url}/${post.user_img}`}
+          onClick={() =>
+            history.push("/singleprofile", {
+              user_id: post.owner_id
+            })
+          }
+        />
+        <PostCardContent>
+          <Line1>
+            <LineBox>
+              <UserName
+                style={{
+                  color: theme_state.mobileNavIcon
+                }}
+              >
+                {post.full_name}
+              </UserName>
+              <Date
+                style={{
+                  color: theme_state.typoMain
+                }}
+              >
+                {moment(post.created_at).twitterShort()}
+              </Date>
+            </LineBox>
+            {post.owner_id == user_id ? (
+              <Icon.Trash onClick={() => delete_post(post.p_id)} />
+            ) : null}
+          </Line1>
+          <Line2
+            style={{
+              color: theme_state.mobileNavIcon
+            }}
+          >
+            <Linkify>{post.post_caption}</Linkify>
+          </Line2>
+
+          <Line3 style={{ marginTop: 15 }}>
+            {post.is_video == "false" ? (
+              <ImageModal imageUrl={`${url}/${post.post_media}`} />
+            ) : (
+              <ReactPlayer
+                url={`${url}/${post.post_media}`}
+                width="100%"
+                height="100%"
+                controls={true}
+              />
+            )}
+          </Line3>
+          <Line4
+            style={{
+              color: theme_state.mobileNavIcon
+            }}
+          >
+            {post.post_liker == null ? (
+              <Icon.Heart
+                color="black"
+                onClick={() => {
+                  like(post.p_id);
+                  onClick();
+                }}
+                className={className}
+              />
+            ) : (
+              <Icon.Heart
+                color="red"
+                className={pulse ? "heart" : "null"}
+                fill="red"
+                className={className}
+                onClick={() => {
+                  unlike(post.p_id);
+                  onClick();
+                }}
+              />
+            )}
+            <b style={{ fontSize: 18 }}>{post.total_likes}</b>
+            <Icon.MessageCircle
+              onClick={() => open_modal(post.p_id, post.post_media)}
             />
-          )}
-        </Line3>
-        <Line4
-          style={{
-            color: theme_state.mobileNavIcon
-          }}
-        >
-          {post.post_liker == null ? (
-            <Icon.Heart
-              color="black"
-              onClick={() => {
-                like(post.p_id);
-                onClick();
-              }}
-              className={className}
-            />
-          ) : (
-            <Icon.Heart
-              color="red"
-              className={pulse ? "heart" : "null"}
-              fill="red"
-              className={className}
-              onClick={() => {
-                unlike(post.p_id);
-                onClick();
-              }}
-            />
-          )}
-          <b style={{ fontSize: 18 }}>{post.total_likes}</b>
-          <Icon.MessageCircle />
-          <b style={{ fontSize: 18 }}>{post.total_comments}</b>
-        </Line4>
-      </PostCardContent>
-    </PostCardDesign>
+            <b style={{ fontSize: 18 }}>{post.total_comments}</b>
+          </Line4>
+        </PostCardContent>
+      </PostCardDesign>
+    </div>
   );
 };
 

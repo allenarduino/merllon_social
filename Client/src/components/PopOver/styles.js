@@ -6,11 +6,11 @@ export const PopOverContainer = styled.div`
   }
   width: 250px;
   height: 300px;
-  background-color: #ffff;
+  z-index: 5;
+  background-color: #fff;
   position: fixed;
   align-self: flex-end;
   right: 70px;
-  z-index: 3;
   margin-top: 50px;
   border-radius: 10px;
   box-shadow: 0px 0px 2px;

@@ -136,3 +136,13 @@ export const CommentBackground = styled.div`
   border-radius: 50%;
   display: none;
 `;
+
+export const BottomSheetContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: "#fff";
+  z-index: 333333333;
+  height: 100px;
+  top: 0;
+`;
