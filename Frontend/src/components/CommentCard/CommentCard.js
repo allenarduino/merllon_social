@@ -37,6 +37,19 @@ const CommentCard = ({ comment }) => {
   const delete_comment = id => {
     if (window.confirm("Delete Comment?")) {
       comment_dispatch({ type: "DELETE_COMMENT", payload: id });
+      let myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      const data = { comment_id: id };
+      fetch(`${url}/delete_comment`, {
+        method: "DELETE",
+        body: JSON.stringify(data),
+        headers: myHeaders
+      })
+        .then(res => res.json())
+        .then(data => {
+          // alert(data.message);
+        })
+        .catch(err => alert(err));
     }
   };
 
