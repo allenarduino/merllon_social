@@ -25,6 +25,13 @@ const CommentModal = props => {
   const [comments, setComments] = React.useState([]);
   const [comment_text, setComment] = React.useState("");
 
+  //For scrolling when new comment is added
+  const commentsEndRef = React.useRef(null);
+
+  const scrollToBottom = () => {
+    commentsEndRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   //For fetching user_img in context to use it offline
   const user_img = post_state.user.map(user => {
     return user.user_img;
@@ -59,6 +66,7 @@ const CommentModal = props => {
     } else {
       setComments([...comments, offline_comment]);
       setComment("");
+      scrollToBottom();
       //Sending comment to the server
       let myHeaders = new Headers();
       myHeaders.append(
@@ -82,7 +90,8 @@ const CommentModal = props => {
 
   React.useEffect(() => {
     fetch_comments();
-  }, []);
+  }, [comments]);
+
   return (
     <div>
       <CommentModalDesign onClick={props.close_modal}>
@@ -98,7 +107,7 @@ const CommentModal = props => {
             {comments.map(comment => (
               <CommentCard comment={comment} />
             ))}
-
+            <div ref={commentsEndRef} />
             <FormContainer onSubmit={create_comment}>
               <CommentInput
                 placeholder="Write Commment"
