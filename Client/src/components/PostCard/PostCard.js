@@ -67,7 +67,7 @@ const PostCard = ({ post }) => {
   const { auth_state } = React.useContext(AuthContext);
   const { post_state, post_dispatch } = React.useContext(PostContext);
   const { profile_state, profile_dispatch } = React.useContext(ProfileContext);
-  const { modal_state, modal_dispatch } = React.useContext(ModalContext);
+  const { modal_dispatch } = React.useContext(ModalContext);
 
   //For handling heart animation
   const [pulse, setPulse] = React.useState(false);
@@ -152,21 +152,23 @@ const PostCard = ({ post }) => {
   };
 
   const delete_post = id => {
-    post_dispatch({ type: "DELETE_POST", payload: id });
-    profile_dispatch({ type: "DELETE_POST", payload: id });
-    let myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    const data = { post_id: id };
-    fetch(`${url}/delete_post`, {
-      method: "DELETE",
-      body: JSON.stringify(data),
-      headers: myHeaders
-    })
-      .then(res => res.json())
-      .then(data => {
-        // alert(data.message);
+    if (window.confirm("Delete Post?")) {
+      post_dispatch({ type: "DELETE_POST", payload: id });
+      profile_dispatch({ type: "DELETE_POST", payload: id });
+      let myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      const data = { post_id: id };
+      fetch(`${url}/delete_post`, {
+        method: "DELETE",
+        body: JSON.stringify(data),
+        headers: myHeaders
       })
-      .catch(err => console.log(err));
+        .then(res => res.json())
+        .then(data => {
+          // alert(data.message);
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   const open_modal = (id, post_media, owner_id, full_name, is_video) => {

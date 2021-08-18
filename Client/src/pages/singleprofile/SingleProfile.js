@@ -76,7 +76,11 @@ const SingleProfile = () => {
                     Edit Profile
                   </EditProfileButton>
                 ) : (
-                  <EditProfileButton>Send Email</EditProfileButton>
+                  <EditProfileButton
+                    onClick={() => window.open(profile.email, "_blank")}
+                  >
+                    Send Email
+                  </EditProfileButton>
                 )}
               </ProfileContainer>
             ))}
