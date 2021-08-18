@@ -21,16 +21,22 @@ import {
 import { ThemeContext } from "../../contexts/ThemeContextProvider";
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import { ModalContext } from "../../contexts/ModalContextProvider";
+import { CommentContext } from "../../contexts/CommentContextProvider";
 
 const CommentCard = ({ comment }) => {
   const history = useHistory();
   const { theme_state } = React.useContext(ThemeContext);
   const { auth_state } = React.useContext(AuthContext);
   const { modal_state, modal_dispatch } = React.useContext(ModalContext);
+  const { comment_dispatch } = React.useContext(CommentContext);
 
   let url = auth_state.url;
   const user_id =
     localStorage.getItem("token") && jwt_decode(localStorage.getItem("token"));
+
+  const delete_comment = id => {
+    comment_dispatch({ type: "DELETE_COMMENT", payload: id });
+  };
 
   return (
     <CommentCardDesign
@@ -59,7 +65,9 @@ const CommentCard = ({ comment }) => {
               {comment.full_name}
             </UserName>
           </Line1Box>
-          {comment.user_id == user_id ? <Icon.Trash size={17} /> : null}
+          {comment.user_id == user_id ? (
+            <Icon.Trash onClick={() => delete_comment(comment.id)} size={17} />
+          ) : null}
         </Line1>
         <Line2>
           <Line2Box

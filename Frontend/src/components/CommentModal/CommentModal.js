@@ -1,4 +1,6 @@
 import React from "react";
+import * as Icon from "react-feather";
+import jwt_decode from "jwt-decode";
 import {
   CommentModalDesign,
   MainModal,
@@ -11,18 +13,20 @@ import {
 } from "./styles";
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import { PostContext } from "../../contexts/PostContextProvider";
-import { ModalContext } from "../../contexts/ModalContextProvider";
-import * as Icon from "react-feather";
+import { CommentContext } from "../../contexts/CommentContextProvider";
 import CommentCard from "../CommentCard/CommentCard";
+const { v4: uuidv4 } = require("uuid");
 
 //This modal is for Desktop Devices
 const CommentModal = props => {
   const { post_state } = React.useContext(PostContext);
+  const { comment_state, comment_dispatch } = React.useContext(CommentContext);
   const { auth_state } = React.useContext(AuthContext);
-  const { modal_state } = React.useContext(ModalContext);
   let url = auth_state.url;
-  const [comments, setComments] = React.useState([]);
   const [comment_text, setComment] = React.useState("");
+
+  const user_id =
+    localStorage.getItem("token") && jwt_decode(localStorage.getItem("token"));
 
   //For scrolling when new comment is added
   const commentsEndRef = React.useRef(null);
@@ -35,6 +39,7 @@ const CommentModal = props => {
   const user_img = post_state.user.map(user => {
     return user.user_img;
   });
+  //Fetching  the comments from server
   const fetch_comments = () => {
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -44,7 +49,7 @@ const CommentModal = props => {
     })
       .then(res => res.json())
       .then(data => {
-        setComments(data.comments);
+        comment_dispatch({ type: "FETCH_COMMENTS", payload: data.comments });
       })
       .catch(err => console.log(err));
   };
@@ -55,7 +60,9 @@ const CommentModal = props => {
   const offline_comment = {
     text: comment_text,
     user_img: user_img,
-    full_name: props.full_name
+    full_name: props.full_name,
+    id: uuidv4(),
+    user_id: user_id
   };
 
   const create_comment = e => {
@@ -63,7 +70,7 @@ const CommentModal = props => {
     if (comment_text == "") {
       return;
     } else {
-      setComments([...comments, offline_comment]);
+      comment_dispatch({ type: "ADD_COMMENT", payload: offline_comment });
       setComment("");
       scrollToTop();
       //Sending comment to the server
@@ -87,13 +94,9 @@ const CommentModal = props => {
     }
   };
 
-  const delete_comment = id => {
-    setComments(comments.filter(comment => comment.id !== id));
-  };
-
   React.useEffect(() => {
     fetch_comments();
-  }, [comments]);
+  }, []);
 
   return (
     <div>
@@ -108,7 +111,7 @@ const CommentModal = props => {
           )}
           <RightSide>
             <div ref={commentsEndRef} />
-            {comments.map(comment => (
+            {comment_state.comments.map(comment => (
               <CommentCard comment={comment} />
             ))}
             <FormContainer onSubmit={create_comment}>
