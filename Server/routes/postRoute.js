@@ -153,4 +153,17 @@ router.get("/fetch_comments/:post_id", (req, res) => {
   });
 });
 
+//For user to delete a comment
+router.delete("/delete_comment", (req, res) => {
+  const comment_id = req.body.comment_id;
+  console.log(comment_id);
+  const sql = `DELETE FROM post_comments WHERE id=${comment_id}`;
+  db.query(sql, function(err, data) {
+    console.log(err);
+    res.status(200).json({
+      mesaage: "Comment Deleted"
+    });
+  });
+});
+
 module.exports = router;
