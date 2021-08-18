@@ -137,12 +137,41 @@ export const CommentBackground = styled.div`
   display: none;
 `;
 
+/*******Section For Comment Modal on Phone************ */
+
 export const BottomSheetContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: "#fff";
-  z-index: 333333333;
+  width: 100%;
   height: 100px;
-  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+  overflow-y: scroll;
+`;
+export const FormContainer = styled.form`
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+  bottom: 0;
+  margin-top: auto;
+  position: sticky;
+`;
+
+export const CommentInput = styled.textarea`
+  width: 80%;
+  max-width: 600px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+`;
+
+export const SubMit = styled.input`
+  width: 20%;
+  padding-left: 20px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+  border: 2px solid #e3405f;
+  background-color: #e3405f;
 `;

@@ -16,6 +16,7 @@ import * as Icon from "react-feather";
 import CommentCard from "../CommentCard/CommentCard";
 import ReactPlayer from "react-player";
 
+//This modal is for Desktop Devices
 const CommentModal = props => {
   const { post_state } = React.useContext(PostContext);
   const { auth_state } = React.useContext(AuthContext);

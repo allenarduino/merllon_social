@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const CommentModalDesign = styled.div`
   @media (max-width: ${769}px) {
-    display: none;
   }
   position: fixed;
   top: 0;
@@ -17,6 +16,12 @@ export const CommentModalDesign = styled.div`
 `;
 
 export const MainModal = styled.div`
+  @media (max-width: ${769}px) {
+    width: 100%;
+    height: 70%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
   background: #fff;
   width: 60%;
   height: 70%;
@@ -29,6 +34,9 @@ export const MainModal = styled.div`
 `;
 
 export const PostImage = styled.img`
+  @media (max-width: ${769}px) {
+    display: none;
+  }
   width: 40%;
   height: 100%;
   display: flex;
@@ -37,6 +45,9 @@ export const PostImage = styled.img`
   border-bottom-left-radius: 10px;
 `;
 export const PostVideo = styled.video`
+  @media (max-width: ${769}px) {
+    display: none;
+  }
   width: 40%;
   height: 100%;
   display: flex;
@@ -46,6 +57,10 @@ export const PostVideo = styled.video`
 `;
 
 export const RightSide = styled.div`
+  @media (max-width: ${769}px) {
+    width: 100%;
+    align-self: center;
+  }
   width: 60%;
   height: 100%;
   display: flex;
@@ -54,6 +69,10 @@ export const RightSide = styled.div`
   overflow-y: scroll;
 `;
 export const FormContainer = styled.form`
+  @media (max-width: ${769}px) {
+    width: 100%;
+    height: 30px;
+  }
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -64,6 +83,9 @@ export const FormContainer = styled.form`
 `;
 
 export const CommentInput = styled.textarea`
+  @media (max-width: ${769}px) {
+    width: 70%;
+  }
   width: 90%;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -71,6 +93,9 @@ export const CommentInput = styled.textarea`
 `;
 
 export const SubMit = styled.input`
+  @media (max-width: ${769}px) {
+    width: 30%;
+  }
   width: 20%;
   padding-left: 20px;
   font-size: 15px;

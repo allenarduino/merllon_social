@@ -26,7 +26,10 @@ import {
   Line4,
   Delete,
   HeartWrapper,
-  BottomSheetContainer
+  BottomSheetContainer,
+  FormContainer,
+  CommentInput,
+  SubMit
 } from "./styles";
 import ImageModal from "../ImageModal/ImageModal";
 import CommentModal from "../CommentModal/CommentModal";
@@ -262,15 +265,16 @@ const PostCard = ({ post }) => {
             )}
             <b style={{ fontSize: 18 }}>{post.total_likes}</b>
             <Icon.MessageCircle
-              onClick={() =>
+              onClick={() => {
                 open_modal(
                   post.p_id,
                   post.post_media,
                   post.owner_id,
                   post.full_name,
                   post.is_video
-                )
-              }
+                );
+                // setOpen(true);
+              }}
             />
             <b style={{ fontSize: 18 }}>{post.total_comments}</b>
           </Line4>
