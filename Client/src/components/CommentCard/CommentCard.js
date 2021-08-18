@@ -24,7 +24,7 @@ const CommentCard = ({ comment }) => {
   const history = useHistory();
   const { theme_state } = React.useContext(ThemeContext);
   const { auth_state } = React.useContext(AuthContext);
-  const { modal_state } = React.useContext(ModalContext);
+  const { modal_state, modal_dispatch } = React.useContext(ModalContext);
 
   let url = auth_state.url;
   return (
@@ -33,7 +33,15 @@ const CommentCard = ({ comment }) => {
         borderBottom: `1px solid ${theme_state.border}`
       }}
     >
-      <UserImage src={`${url}/${comment.user_img}`} />
+      <UserImage
+        src={`${url}/${comment.user_img}`}
+        onClick={() => {
+          history.push("/singleprofile", {
+            user_id: comment.user_id
+          });
+          modal_dispatch({ type: "CLOSE_MODAL" });
+        }}
+      />
       <Content>
         <Line1>
           <Line1Box>
@@ -56,11 +64,12 @@ const CommentCard = ({ comment }) => {
             <Line2Text>
               Replying to
               <span
-                onClick={() =>
+                onClick={() => {
                   history.push("/singleprofile", {
                     user_id: modal_state.owner_id
-                  })
-                }
+                  });
+                  modal_dispatch({ type: "CLOSE_MODAL" });
+                }}
                 style={{
                   color: theme_state.mainColor
                 }}

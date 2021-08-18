@@ -21,6 +21,7 @@ export const MainModal = styled.div`
     height: 70%;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    z-index: 77;
   }
   background: #fff;
   width: 60%;
