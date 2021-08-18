@@ -67,7 +67,7 @@ const PostCard = ({ post }) => {
   const { auth_state } = React.useContext(AuthContext);
   const { post_state, post_dispatch } = React.useContext(PostContext);
   const { profile_state, profile_dispatch } = React.useContext(ProfileContext);
-  const { modal_state, modal_dispatch } = React.useContext(ModalContext);
+  const { modal_dispatch } = React.useContext(ModalContext);
 
   //For handling heart animation
   const [pulse, setPulse] = React.useState(false);

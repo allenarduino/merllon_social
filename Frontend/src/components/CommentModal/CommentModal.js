@@ -87,6 +87,10 @@ const CommentModal = props => {
     }
   };
 
+  const delete_comment = id => {
+    setComments(comments.filter(comment => comment.id !== id));
+  };
+
   React.useEffect(() => {
     fetch_comments();
   }, [comments]);

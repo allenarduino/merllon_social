@@ -1,7 +1,9 @@
 import React from "react";
 import moment from "moment-twitter";
 import Linkify from "react-linkify";
-import { Link, useHistory } from "react-router-dom";
+import * as Icon from "react-feather";
+import { useHistory } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 import {
   CommentCardDesign,
   UserImage,
@@ -27,6 +29,9 @@ const CommentCard = ({ comment }) => {
   const { modal_state, modal_dispatch } = React.useContext(ModalContext);
 
   let url = auth_state.url;
+  const user_id =
+    localStorage.getItem("token") && jwt_decode(localStorage.getItem("token"));
+
   return (
     <CommentCardDesign
       style={{
@@ -54,6 +59,7 @@ const CommentCard = ({ comment }) => {
               {comment.full_name}
             </UserName>
           </Line1Box>
+          {comment.user_id == user_id ? <Icon.Trash size={17} /> : null}
         </Line1>
         <Line2>
           <Line2Box
