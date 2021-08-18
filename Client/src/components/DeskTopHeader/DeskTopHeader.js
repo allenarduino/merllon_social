@@ -3,11 +3,12 @@ import { useLocation, Link } from "react-router-dom";
 import { HeaderDesign, HeaderRight, Spacer } from "./styles";
 import * as Icon from "react-feather";
 import PopOver from "../PopOver/PopOver";
+import SettingsPopOver from "../SettingsPopOver/SettingsPopOver";
 
 //General Header for Desktop
 const DeskTopHeader = () => {
-  const location = useLocation();
   const [Pop_visible, setPop_visible] = React.useState(false);
+  const [settingsVisible, setSettingsVisible] = React.useState(false);
 
   return (
     <div>
@@ -27,8 +28,10 @@ const DeskTopHeader = () => {
           <Link to="/profile" style={{ color: "black" }}>
             <Icon.User size={25} />
           </Link>
+          <Icon.Settings onClick={() => setSettingsVisible(!settingsVisible)} />
         </HeaderRight>
       </HeaderDesign>
+      {settingsVisible ? <SettingsPopOver /> : null}
       {Pop_visible ? <PopOver /> : null}
     </div>
   );
