@@ -35,7 +35,9 @@ const CommentCard = ({ comment }) => {
     localStorage.getItem("token") && jwt_decode(localStorage.getItem("token"));
 
   const delete_comment = id => {
-    comment_dispatch({ type: "DELETE_COMMENT", payload: id });
+    if (window.confirm("Delete Comment?")) {
+      comment_dispatch({ type: "DELETE_COMMENT", payload: id });
+    }
   };
 
   return (
