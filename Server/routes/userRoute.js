@@ -86,8 +86,8 @@ router.get("/user_profile/:user_id", auth, (req, res) => {
 //For user to update his name
 router.post("/update_name", auth, (req, res) => {
   const user_id = req.user_id;
-  const full_name = req.body.full_name;
-  console.log(full_name);
+  const name = req.body.name;
+  console.log(name);
   const sql = `UPDATE users SET full_name=? WHERE user_id=?`;
   db.query(sql, [full_name, user_id], function(err, data) {
     res.status(200).json({ message: "Name Updated" });

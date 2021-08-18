@@ -142,10 +142,11 @@ router.post("/create_comment/:post_id", auth, (req, res) => {
 //For fetching comments under a post
 router.get("/fetch_comments/:post_id", (req, res) => {
   const post_id = req.params.post_id;
+
   console.log(post_id);
-  const sql = `SELECT* FROM post_comments,users WHERE post_comments.C_post_id=?
-  AND users.user_id=post_comments.user_id`;
-  db.query(sql, [post_id], function(err, data) {
+  const sql = `SELECT* FROM post_comments,users WHERE post_comments.C_post_id=${post_id}
+  AND users.user_id=post_comments.user_id ORDER BY post_comments.id DESC`;
+  db.query(sql, function(err, data) {
     res.status(200).json({
       comments: data
     });
