@@ -89,6 +89,7 @@ const CommentModal = props => {
         .then(res => res.json())
         .then(data => {
           console.log(data.comments);
+          fetch_comments();
         })
         .catch(err => console.log(err));
     }
