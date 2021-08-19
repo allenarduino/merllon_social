@@ -7,13 +7,15 @@ import {
   CommentContainer,
   CommentBackground,
   CommentInputContainer,
-  CommentInput
+  CommentInput,
+  EmptyCommentFeedBack
 } from "./styles";
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import { PostContext } from "../../contexts/PostContextProvider";
 import { CommentContext } from "../../contexts/CommentContextProvider";
 import { ThemeContext } from "../../contexts/ThemeContextProvider";
 import CommentCard from "../../components/CommentCard/CommentCard";
+import Loader from "../../components/Loader/Loader";
 const { v4: uuidv4 } = require("uuid");
 
 //This modal is for Desktop Devices
@@ -26,6 +28,8 @@ const CommentPage = () => {
   const { auth_state } = React.useContext(AuthContext);
   let url = auth_state.url;
   const [comment_text, setComment] = React.useState("");
+  const [empty_comment, setEmptyComment] = React.useState(false);
+  const [loading, controlLoading] = React.useState(true);
 
   const user_id =
     localStorage.getItem("token") && jwt_decode(localStorage.getItem("token"));
@@ -56,6 +60,7 @@ const CommentPage = () => {
       .then(res => res.json())
       .then(data => {
         comment_dispatch({ type: "FETCH_COMMENTS", payload: data.comments });
+        controlLoading(false);
       })
       .catch(err => console.log(err));
   };
@@ -113,11 +118,23 @@ const CommentPage = () => {
           onClick={() => history.goBack()}
         />
       </BackArrowContainer>
+
       <CommentContainer style={{ backgroundColor: theme_state.background }}>
-        <div ref={commentsEndRef} />
-        {comment_state.comments.map(comment => (
-          <CommentCard comment={comment} />
-        ))}
+        {loading ? (
+          <Loader />
+        ) : (
+          <div>
+            <div ref={commentsEndRef} />
+            {comment_state.comments.length == 0 ? (
+              <EmptyCommentFeedBack style={{ color: theme_state.color }}>
+                Be the first to comment
+              </EmptyCommentFeedBack>
+            ) : null}
+            {comment_state.comments.map(comment => (
+              <CommentCard comment={comment} />
+            ))}
+          </div>
+        )}
         <CommentInputContainer>
           <CommentInput
             type="text"

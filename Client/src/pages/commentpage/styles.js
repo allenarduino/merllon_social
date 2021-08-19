@@ -57,3 +57,13 @@ export const CommentInput = styled.textarea`
   padding-left: 10px;
   border-radius: 20px;
 `;
+
+export const EmptyCommentFeedBack = styled.div`
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  line-height: 250px;
+  position: sticky;
+`;
