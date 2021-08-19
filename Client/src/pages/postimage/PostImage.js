@@ -3,6 +3,7 @@ import CreatePostHeader from "../../components/CreatePostHeader/CreatePostHeader
 import { MyImage, CenterInput, InputField, SubmitButton } from "./styles";
 import { useHistory } from "react-router-dom";
 import { SelectMediaContext } from "../../contexts/SelectMediaContextProvider";
+import { PostContext } from "../../contexts/PostContextProvider";
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import { ThemeContext } from "../../contexts/ThemeContextProvider";
 
@@ -11,6 +12,7 @@ const PostImage = () => {
   const { media_state } = React.useContext(SelectMediaContext);
   const { auth_state } = React.useContext(AuthContext);
   const { theme_state } = React.useContext(ThemeContext);
+  const { post_dispatch } = React.useContext(PostContext);
   const [post_caption, setPostCaption] = React.useState("");
   const [loading, controlLoading] = React.useState(false);
   let url = auth_state.url;
@@ -37,6 +39,7 @@ const PostImage = () => {
       .then(res => res.json())
       .then(data => {
         controlLoading(false);
+        post_dispatch({ type: "POST_SENDING" });
         //alert(data.message);
         history.push("/");
       })

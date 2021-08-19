@@ -22,6 +22,12 @@ export const postReducer = (state, action) => {
         posts: state.posts.filter(post => post.p_id !== action.payload)
       };
 
+    case "POST_SENDING":
+      return {
+        ...state,
+        post_sending: true
+      };
+
     default:
       return state;
   }
