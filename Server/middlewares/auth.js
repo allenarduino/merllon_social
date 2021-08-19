@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const secret = require("../secret");
 
 const verifyToken = (req, res, next) => {
   const token = req.headers["x-access-token"] || req.body.token;
@@ -8,7 +7,7 @@ const verifyToken = (req, res, next) => {
     return res.status(403).send("Token required");
   }
   try {
-    const decoded = jwt.verify(token, secret.secret_key);
+    const decoded = jwt.verify(token, process.env.SECRETE_KEY);
     req.user_id = decoded;
   } catch (err) {
     return res.status(401).send("Invalid Token");

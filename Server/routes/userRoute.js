@@ -3,7 +3,6 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const db = require("../database");
 const jwt = require("jsonwebtoken");
-const secret = require("../secret");
 const auth = require("../middlewares/auth");
 const multer = require("multer");
 const path = require("path");
@@ -53,7 +52,7 @@ router.post("/login", (req, res) => {
       console.log(data[0]["full_name"]);
       console.log(password_verify);
       if (password_verify) {
-        const token = jwt.sign(user_id, secret.secret_key);
+        const token = jwt.sign(user_id, process.env.SECRETE_KEY);
         res.status(200).json(token);
       } else {
         res.status(200).json({

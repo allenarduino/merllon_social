@@ -9,15 +9,15 @@ const auth = require("../middlewares/auth");
 const sseExpress = require("sse-express");
 
 //Store uploaded image in a folder
-const storage = multer.diskStorage({
+/*const storage = multer.diskStorage({
   destination: "uploads/",
   filename: function(req, file, cb) {
     cb(null, "IMAGE-" + Date.now() + path.extname(file.originalname));
   }
-});
+});*/
 
 //Create Post
-const upload = multer({ storage: storage });
+const upload = multer({ storage: multer.memoryStorage() });
 const type = upload.single("post_media");
 router.post("/create_post", type, auth, function(req, res) {
   console.log(req.file);

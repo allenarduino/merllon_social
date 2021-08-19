@@ -4,6 +4,8 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const socket = require("socket.io");
+const dotenv = require("dotenv");
+dotenv.config();
 
 //importing routers
 const userRoute = require("./routes/userRoute");
