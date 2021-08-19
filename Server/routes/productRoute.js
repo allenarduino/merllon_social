@@ -1,26 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const multer = require("multer");
-const app = express();
-const fs = require("fs");
 const db = require("../database");
-const path = require("path");
 const auth = require("../middlewares/auth");
-const sseExpress = require("sse-express");
+const path = require("path");
+const cloudinary = require("../middlewares/cloudinary");
+const upload = require("../middlewares/multer");
 
-//Store uploaded image in a folder
-const storage = multer.diskStorage({
-  destination: "uploads/",
-  filename: function(req, file, cb) {
-    cb(null, "IMAGE-" + Date.now() + path.extname(file.originalname));
-  }
-});
+//Create Product
 
-//Create Post
-const upload = multer({ storage: storage });
 const type = upload.single("product_img");
-router.post("/create_product", type, auth, function(req, res) {
-  const target_path = req.file.path;
+router.post("/create_product", type, auth, async function(req, res) {
+  const result = await cloudinary.uploader.upload(req.file.path);
+  console.log(result);
+  const target_path = result.secure_url;
   const name = req.body.name;
   const user_id = req.user_id;
   const price = req.body.price;

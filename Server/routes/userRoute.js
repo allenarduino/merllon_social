@@ -4,16 +4,19 @@ const bcrypt = require("bcryptjs");
 const db = require("../database");
 const jwt = require("jsonwebtoken");
 const auth = require("../middlewares/auth");
-const multer = require("multer");
 const path = require("path");
+const cloudinary = require("../middlewares/cloudinary");
+const upload = require("../middlewares/multer");
 
 router.post("/register", function(req, res) {
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
   const hashed_password = bcrypt.hashSync(password, 12);
-  const user_img = "uploads/avatar.jpg";
-  const coverphoto = "uploads/coverphoto.jpg";
+  const user_img =
+    "https://res.cloudinary.com/dv5qiaugw/image/upload/v1629400835/edluqnqnxxzdsl6fgvaf.jpg";
+  const coverphoto =
+    "https://res.cloudinary.com/dv5qiaugw/image/upload/v1629400849/sorlok2jfroxfwyyz0pt.jpg";
   const bio = "My bio";
 
   const inputData = [name, email, hashed_password, user_img, coverphoto, bio];
@@ -52,7 +55,7 @@ router.post("/login", (req, res) => {
       console.log(data[0]["full_name"]);
       console.log(password_verify);
       if (password_verify) {
-        const token = jwt.sign(user_id, process.env.SECRETE_KEY);
+        const token = jwt.sign(user_id, process.env.SECRET_KEY);
         res.status(200).json(token);
       } else {
         res.status(200).json({
@@ -78,6 +81,7 @@ router.get("/user_profile/:user_id", auth, (req, res) => {
   (SELECT COUNT(*) FROM post_likes WHERE p.p_id=post_likes.L_post_id) as total_likes
   FROM posts p,users u WHERE u.user_id=p.owner_id AND p.owner_id=${user_id} ORDER BY p.p_id DESC`;
   db.query(sql, function(err, data) {
+    console.log(err);
     res.status(200).json({ user_profile: data[0], user_posts: data[1] });
   });
 });
@@ -105,22 +109,12 @@ router.post("/update_bio", auth, (req, res) => {
   });
 });
 
-//Store uploaded image in a folder
-const storage = multer.diskStorage({
-  destination: "uploads/",
-  filename: function(req, file, cb) {
-    cb(null, "IMAGE-" + Date.now() + path.extname(file.originalname));
-  }
-});
-
-//Upload profile photo
-const upload1 = multer({ storage: storage });
-const type_user_img = upload1.single("user_img");
-
 //Update Profile Photo
-router.post("/update_user_img", type_user_img, auth, function(req, res) {
-  console.log(req.file);
-  const target_path = req.file.path;
+type_user_img = upload.single("user_img");
+router.post("/update_user_img", type_user_img, auth, async function(req, res) {
+  const result = await cloudinary.uploader.upload(req.file.path);
+  console.log(result);
+  const target_path = result.secure_url;
   const user_id = req.user_id;
   const sql = `UPDATE users SET user_img=? WHERE user_id=?`;
 
@@ -131,12 +125,15 @@ router.post("/update_user_img", type_user_img, auth, function(req, res) {
   });
 });
 
-const upload2 = multer({ storage: storage });
-const type_coverphoto = upload2.single("coverphoto");
+const type_coverphoto = upload.single("coverphoto");
 
-router.post("/update_coverphoto", type_coverphoto, auth, function(req, res) {
-  console.log(req.file);
-  const target_path = req.file.path;
+router.post("/update_coverphoto", type_coverphoto, auth, async function(
+  req,
+  res
+) {
+  const result = await cloudinary.uploader.upload(req.file.path);
+  console.log(result);
+  const target_path = result.secure_url;
   const user_id = req.user_id;
   const sql = `UPDATE users SET coverphoto=? WHERE user_id=?`;
 

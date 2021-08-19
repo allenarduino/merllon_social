@@ -1,27 +1,62 @@
 const express = require("express");
 const router = express.Router();
-const multer = require("multer");
-const app = express();
-const fs = require("fs");
 const db = require("../database");
-const path = require("path");
+const fs = require("fs");
 const auth = require("../middlewares/auth");
-const sseExpress = require("sse-express");
+const path = require("path");
+const cloudinary = require("../middlewares/cloudinary");
+const upload = require("../middlewares/multer");
 
-//Store uploaded image in a folder
-/*const storage = multer.diskStorage({
-  destination: "uploads/",
-  filename: function(req, file, cb) {
-    cb(null, "IMAGE-" + Date.now() + path.extname(file.originalname));
-  }
-});*/
-
-//Create Post
-const upload = multer({ storage: multer.memoryStorage() });
+//Upload Image
 const type = upload.single("post_media");
-router.post("/create_post", type, auth, function(req, res) {
-  console.log(req.file);
-  const target_path = req.file.path;
+router.post("/post_image", type, auth, async function(req, res) {
+  const { path } = req.file;
+  const result = await cloudinary.uploader.upload(
+    path,
+    {
+      resource_type: "image"
+    },
+    (err, image) => {
+      console.log(image);
+    }
+  );
+  console.log(result);
+  const target_path = result.secure_url;
+  console.log(target_path);
+  const post_caption = req.body.post_caption;
+  console.log(post_caption);
+  const user_id = req.user_id;
+  console.log(user_id);
+  const is_video = req.body.is_video;
+
+  const inputData = [post_caption, target_path, is_video, user_id];
+  const sql = `INSERT INTO posts(post_caption,post_media,is_video,owner_id) 
+  VALUES (?,?,?,?)`;
+
+  db.query(sql, inputData, function(err, data) {
+    console.log(inputData);
+    console.log(err);
+    res.status(200).json({
+      message: "Post Created"
+    });
+  });
+});
+
+//Upload Video
+
+router.post("/post_video", type, auth, async function(req, res) {
+  const { path } = req.file;
+  const result = await cloudinary.uploader.upload(
+    path,
+    {
+      resource_type: "video"
+    },
+    (err, video) => {
+      console.log(video);
+    }
+  );
+  console.log(result);
+  const target_path = result.secure_url;
   console.log(target_path);
   const post_caption = req.body.post_caption;
   console.log(post_caption);
@@ -72,10 +107,11 @@ router.get("/posts", auth, (req, res) => {
   FROM posts p,users u WHERE u.user_id=p.owner_id  ORDER BY p.p_id DESC;
   SELECT* FROM users WHERE user_id=${user_id}
   `;
-  db.query(sql, function(err, data) {
+  db.query(sql, function(err, results) {
     console.log(err);
-    res.status(200).json({ posts: data[0], user: data[1] });
+    res.status(200).json({ posts: results[0], user: results[1] });
   });
+  db.end();
 });
 
 // For displaying posts on homepage
