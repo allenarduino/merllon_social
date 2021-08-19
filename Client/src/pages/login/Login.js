@@ -18,7 +18,7 @@ import {
 
 const Login = () => {
   const history = useHistory();
-  const { theme_state, theme_dispatch } = React.useContext(ThemeContext);
+  const { theme_state } = React.useContext(ThemeContext);
   const { auth_state, auth_dispatch } = React.useContext(AuthContext);
   let url = auth_state.url;
 
@@ -72,7 +72,7 @@ const Login = () => {
         <LoginContainer>
           <LoginHeaderText
             style={{
-              color: theme_state.typoMain
+              color: theme_state.color
             }}
           >
             Log in to Merllon
@@ -119,7 +119,7 @@ const Login = () => {
             <CenterInput>
               <LinkText
                 style={{
-                  color: theme_state.typoMain
+                  color: theme_state.color
                 }}
               >
                 Don't have an account?{" "}

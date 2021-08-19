@@ -7,28 +7,31 @@ import Dark from "../../assets/icons/dark.svg";
 import {
   SettingsMain,
   SettingsHeader,
-  SettingsBox,
-  IconBox,
-  SettingsBackground,
   SettingsTitle,
-  SettingsBody,
   Choices,
   Img,
   LogoutButton,
   ThemeText,
-  Spacer,
-  IconsContainer
+  Spacer
 } from "./styles";
 
 import { ThemeContext } from "../../contexts/ThemeContextProvider";
+import { AuthContext } from "../../contexts/AuthContextProvider";
 
 const SettingsPopOver = () => {
+  const history = useHistory();
   const { theme_state, theme_dispatch } = React.useContext(ThemeContext);
+  const { auth_dispatch } = React.useContext(AuthContext);
   const set_light_theme = () => {
     theme_dispatch({ type: "LIGHT_MODE" });
   };
   const set_dark_theme = () => {
     theme_dispatch({ type: "DARK_MODE" });
+  };
+
+  const logout = () => {
+    auth_dispatch({ type: "LOGOUT" });
+    history.push("/login");
   };
   return (
     <SettingsMain style={{ backgroundColor: theme_state.background }}>
@@ -52,7 +55,7 @@ const SettingsPopOver = () => {
           />
         </Spacer>
       </Choices>
-      <LogoutButton>Logout</LogoutButton>
+      <LogoutButton onClick={() => logout()}>Logout</LogoutButton>
     </SettingsMain>
   );
 };

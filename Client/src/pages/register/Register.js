@@ -17,10 +17,10 @@ import {
 } from "./styles";
 
 const Register = () => {
-  const { theme_state, theme_dispatch } = React.useContext(ThemeContext);
+  const { theme_state } = React.useContext(ThemeContext);
 
   const history = useHistory();
-  const { auth_state, auth_dispatch } = React.useContext(AuthContext);
+  const { auth_state } = React.useContext(AuthContext);
   let url = auth_state.url;
 
   const [name, setName] = React.useState("");
@@ -78,7 +78,7 @@ const Register = () => {
         <LoginContainer>
           <LoginHeaderText
             style={{
-              color: theme_state.typoMain
+              color: theme_state.color
             }}
           >
             Register to Merllon
@@ -133,7 +133,7 @@ const Register = () => {
             <CenterInput>
               <LinkText
                 style={{
-                  color: theme_state.typoMain
+                  color: theme_state.color
                 }}
               >
                 Already have an account?{" "}
