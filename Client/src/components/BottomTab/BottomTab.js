@@ -4,6 +4,7 @@ import { BottomNav, BnTab, OptionsContainer, FileInput } from "./styles";
 import * as Icon from "react-feather";
 import Sheet from "react-modal-sheet";
 import { SelectMediaContext } from "../../contexts/SelectMediaContextProvider";
+import { ThemeContext } from "../../contexts/ThemeContextProvider";
 
 const BottomTab = props => {
   const location = useLocation();
@@ -11,6 +12,7 @@ const BottomTab = props => {
   const [isOpen, setOpen] = React.useState(false);
 
   const { media_dispatch } = React.useContext(SelectMediaContext);
+  const { theme_state } = React.useContext(ThemeContext);
 
   const handle_image_change = e => {
     media_dispatch({
@@ -34,20 +36,20 @@ const BottomTab = props => {
 
   return (
     <div style={{ justifyContent: "center", display: "flex" }}>
-      <BottomNav>
+      <BottomNav style={{ backgroundColor: theme_state.background }}>
         <BnTab>
           {location.pathname === "/" ? (
             <Link to="/" style={{ color: "black" }}>
               <Icon.Home
                 name="home-outline"
                 className="mr-2 feedIcons"
-                color="black"
+                color={theme_state.color}
                 size={24}
               />
             </Link>
           ) : (
-            <Link to="/" style={{ color: "black" }}>
-              <Icon.Home className="mr-2 feedIcons" size={20} />
+            <Link to="/" style={{ color: theme_state.color }}>
+              <Icon.Home size={20} color={theme_state.color} />
             </Link>
           )}
         </BnTab>
@@ -55,7 +57,7 @@ const BottomTab = props => {
           {location.pathname === "/create_post" ? (
             <Icon.PlusCircle
               className="mr-2 feedIcons"
-              color="black"
+              color={theme_state.color}
               size={24}
             />
           ) : (
@@ -63,23 +65,38 @@ const BottomTab = props => {
               className="mr-2 feedIcons"
               size={20}
               onClick={() => setOpen(true)}
+              color={theme_state.color}
             />
           )}
         </BnTab>
         <BnTab>
           {location.pathname === "/profile" ? (
-            <Link to="/profile" style={{ color: "black" }}>
-              <Icon.User className="mr-2 feedIcons" color="black" size={24} />
+            <Link to="/profile" style={{ color: theme_state.color }}>
+              <Icon.User
+                className="mr-2 feedIcons"
+                color={theme_state.color}
+                size={24}
+              />
             </Link>
           ) : (
-            <Link to="/profile" style={{ color: "black" }}>
-              <Icon.User className="mr-2 feedIcons" size={20} />
+            <Link to="/profile" style={{ color: theme_state.color }}>
+              <Icon.User
+                className="mr-2 feedIcons"
+                size={20}
+                color={theme_state.color}
+              />
             </Link>
           )}
         </BnTab>
         {/*****************Modal*************** */}
         <Sheet isOpen={isOpen} onClose={() => setOpen(false)}>
-          <Sheet.Container style={{ height: 200, paddingLeft: 20 }}>
+          <Sheet.Container
+            style={{
+              height: 200,
+              paddingLeft: 20,
+              backgroundColor: theme_state.background
+            }}
+          >
             <Sheet.Header />
             <Sheet.Content>
               <label>
@@ -90,7 +107,10 @@ const BottomTab = props => {
                     onChange={handle_image_change}
                     accept="image/x-png,image/jpeg,image/jpg"
                   />
-                  Add Photo <Icon.Image style={{ marginLeft: 10 }} />
+                  <b style={{ color: theme_state.color }}>Add Photo</b>{" "}
+                  <Icon.Image
+                    style={{ marginLeft: 10, color: theme_state.color }}
+                  />
                 </OptionsContainer>
               </label>
               <label>
@@ -101,7 +121,10 @@ const BottomTab = props => {
                     onChange={handle_video_change}
                     accept="video/mp4,video/x-m4v,video/mp3,video/*"
                   />
-                  Add Video <Icon.Video style={{ marginLeft: 10 }} />
+                  <b style={{ color: theme_state.color }}>Add Video</b>{" "}
+                  <Icon.Video
+                    style={{ marginLeft: 10, color: theme_state.color }}
+                  />
                 </OptionsContainer>
               </label>
             </Sheet.Content>

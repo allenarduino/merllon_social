@@ -58,13 +58,12 @@ export const Spacer = styled.div`
 `;
 
 export const Img = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 20px;
+  height: 20px;
   max-width: 100%;
   max-height: 100%;
-  border-radius: 50%;
-  box-sizing: content-box;
-  padding: 1px;
+  border-radius: 20px;
+  margin-left: 10px;
 `;
 export const LogoutButtonContainer = styled.div`
   width: 100%;

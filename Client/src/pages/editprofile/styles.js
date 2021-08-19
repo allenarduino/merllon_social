@@ -7,6 +7,7 @@ export const MainContainer = styled.main`
   margin-bottom: 80px;
   margin: 0 auto;
   justify-content: center;
+  height: 100vh;
 `;
 
 //Container for posts and side nav

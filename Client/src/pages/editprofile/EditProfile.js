@@ -1,6 +1,7 @@
 import React from "react";
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import { ProfileContext } from "../../contexts/ProfileContextProvider";
+import { ThemeContext } from "../../contexts/ThemeContextProvider";
 import jwt_decode from "jwt-decode";
 import { Fade } from "react-reveal";
 import * as Icon from "react-feather";
@@ -31,8 +32,9 @@ const EditProfile = () => {
   const [loadingCoverphoto, controlCoverphotoLoading] = React.useState(false);
   const [loadingName, controlNameLoading] = React.useState(false);
   const [loadingBio, controlBioLoading] = React.useState(false);
-  const { auth_state, auth_dispatch } = React.useContext(AuthContext);
-  const { profile_state, profile_dispatch } = React.useContext(ProfileContext);
+  const { auth_state } = React.useContext(AuthContext);
+  const { profile_state } = React.useContext(ProfileContext);
+  const { theme_state } = React.useContext(ThemeContext);
   let url = auth_state.url;
 
   const user_id =
@@ -169,7 +171,7 @@ const EditProfile = () => {
   };
 
   return (
-    <MainContainer>
+    <MainContainer style={{ backgroundColor: theme_state.background }}>
       <Fade bottom duration={900} distance="40px">
         <ContentConatainer>
           {profile_state.profile.map(profile => (
@@ -187,13 +189,14 @@ const EditProfile = () => {
                   onChange={handle_coverphoto_change}
                   accept="image/x-png,image/jpeg,image/jpg"
                 />
-                <Icon.Camera />
+                <Icon.Camera color={theme_state.color} />
               </label>
               <label style={{ alignSelf: "flex-end", marginTop: 10 }}>
                 {coverphoto_selected ? (
                   !loadingCoverphoto ? (
                     <Icon.CheckCircle
                       style={{ marginRight: 10 }}
+                      color={theme_state.color}
                       onClick={() => update_coverphoto()}
                     />
                   ) : (
@@ -214,13 +217,16 @@ const EditProfile = () => {
                   onChange={handle_user_img_change}
                   accept="image/x-png,image/jpeg,image/jpg"
                 />
-                <Icon.Camera />
+                <Icon.Camera color={theme_state.color} />
               </label>
               <label style={{ alignSelf: "center", marginTop: 10 }}>
                 {!user_img_selected ? null : !loadingUser_img ? (
-                  <Icon.CheckCircle onClick={() => update_user_img()} />
+                  <Icon.CheckCircle
+                    color={theme_state.color}
+                    onClick={() => update_user_img()}
+                  />
                 ) : (
-                  <div>Loading...</div>
+                  <div style={{ color: theme_state.color }}>Loading...</div>
                 )}
               </label>
 
@@ -235,9 +241,10 @@ const EditProfile = () => {
                   <Icon.CheckCircle
                     onClick={() => update_name()}
                     style={{ marginTop: 20, marginLeft: 10 }}
+                    color={theme_state.color}
                   />
                 ) : (
-                  <div>Loading...</div>
+                  <div style={{ color: theme_state.color }}>Loading...</div>
                 )}
               </InputContainer>
 
@@ -252,6 +259,7 @@ const EditProfile = () => {
                   <Icon.CheckCircle
                     onClick={() => update_bio()}
                     style={{ marginTop: 20, marginLeft: 10 }}
+                    color={theme_state.color}
                   />
                 ) : (
                   <div>Loading..</div>

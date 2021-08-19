@@ -72,16 +72,19 @@ const CommentCard = ({ comment }) => {
         <Line1>
           <Line1Box>
             <UserName
-              /*style={{
-                color: theme_state.typoMain
-              }}*/
-              style={{ color: "black" }}
+              style={{
+                color: theme_state.color
+              }}
             >
               {comment.full_name}
             </UserName>
           </Line1Box>
           {comment.user_id == user_id ? (
-            <Icon.Trash onClick={() => delete_comment(comment.id)} size={17} />
+            <Icon.Trash
+              onClick={() => delete_comment(comment.id)}
+              size={17}
+              style={{ color: theme_state.color }}
+            />
           ) : null}
         </Line1>
         <Line2>
@@ -112,7 +115,7 @@ const CommentCard = ({ comment }) => {
           </Line2Box>
           <Line2Content
             style={{
-              color: "black"
+              color: theme_state.color
             }}
           >
             <Linkify>{comment.text}</Linkify>

@@ -2,13 +2,13 @@ import React from "react";
 import { PostContext } from "../../contexts/PostContextProvider";
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import { ModalContext } from "../../contexts/ModalContextProvider";
+import { ThemeContext } from "../../contexts/ThemeContextProvider";
 
 import { Fade } from "react-reveal";
 import Loader from "../../components/Loader/Loader";
 import PostCard from "../../components/PostCard/PostCard";
 import HomeHeader from "../../components/HomeHeader/HomeHeader";
 import jwt_decode from "jwt-decode";
-import Sheet from "react-modal-sheet";
 
 import {
   MainContainer,
@@ -25,6 +25,7 @@ const Home = () => {
   const { post_state, post_dispatch } = React.useContext(PostContext);
   const { auth_state } = React.useContext(AuthContext);
   const { modal_state, modal_dispatch } = React.useContext(ModalContext);
+  const { theme_state } = React.useContext(ThemeContext);
 
   let url = auth_state.url;
 
@@ -58,8 +59,8 @@ const Home = () => {
   return (
     <div>
       <HomeHeader />
-      <MainContainer>
-        <ContentConatainer>
+      <MainContainer style={{ backgroundColor: theme_state.background }}>
+        <ContentConatainer style={{ backgroundColor: theme_state.background }}>
           {post_state.posts.length == 0 ? (
             <Loader />
           ) : (
@@ -73,9 +74,9 @@ const Home = () => {
           )}
 
           {post_state.user.map(user => (
-            <SideNav style={{ backgroundColor: "#ff" }}>
+            <SideNav style={{ backgroundColor: theme_state.background }}>
               <Avatar src={`${url}/${user.user_img}`} />
-              <b>{user.full_name}</b>
+              <b style={{ color: theme_state.color }}>{user.full_name}</b>
             </SideNav>
           ))}
         </ContentConatainer>

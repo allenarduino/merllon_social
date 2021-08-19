@@ -4,9 +4,9 @@ import styled from "styled-components";
 export const MainContainer = styled.main`
   display: flex;
   flex: 1;
-  margin-bottom: 80px;
   margin: 0 auto;
   justify-content: center;
+  padding-bottom: 80px;
 `;
 
 //Container for posts and side nav

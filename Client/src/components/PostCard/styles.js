@@ -19,6 +19,7 @@ export const UserImage = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50px;
+  border: 2px solid white;
 `;
 
 export const PostCardContent = styled.div`

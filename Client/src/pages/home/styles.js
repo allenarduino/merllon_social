@@ -5,7 +5,7 @@ export const MainContainer = styled.main`
   display: flex;
   flex: 1;
   margin-top: 50px;
-  margin-bottom: 80px;
+  padding-bottom: 80px;
 `;
 
 //Container for posts and side nav
@@ -42,11 +42,7 @@ export const SideNav = styled.section`
   align-items: center;
   align-self: flex-end;
   border-radius: 20px;
-  box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
-  -o-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
-  -ms-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 2px;
 `;
 
 export const Avatar = styled.img`
@@ -55,4 +51,5 @@ export const Avatar = styled.img`
   border-radius: 80px;
   align-self: center;
   margin-top: 20px;
+  border: 2px solid white;
 `;

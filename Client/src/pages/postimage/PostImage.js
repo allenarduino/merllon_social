@@ -4,11 +4,13 @@ import { MyImage, CenterInput, InputField, SubmitButton } from "./styles";
 import { useHistory } from "react-router-dom";
 import { SelectMediaContext } from "../../contexts/SelectMediaContextProvider";
 import { AuthContext } from "../../contexts/AuthContextProvider";
+import { ThemeContext } from "../../contexts/ThemeContextProvider";
 
 const PostImage = () => {
   const history = useHistory();
   const { media_state } = React.useContext(SelectMediaContext);
   const { auth_state } = React.useContext(AuthContext);
+  const { theme_state } = React.useContext(ThemeContext);
   const [post_caption, setPostCaption] = React.useState("");
   const [loading, controlLoading] = React.useState(false);
   let url = auth_state.url;
@@ -45,7 +47,14 @@ const PostImage = () => {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div
+      style={{
+        display: "flex",
+        height: "100vh",
+        justifyContent: "center",
+        backgroundColor: theme_state.background
+      }}
+    >
       <CreatePostHeader create_post={create_post} />
       <CenterInput>
         <InputField
@@ -54,6 +63,10 @@ const PostImage = () => {
           type="text"
           value={post_caption}
           name="post_caption"
+          style={{
+            backgroundColor: theme_state.background,
+            color: theme_state.color
+          }}
         />
         <MyImage src={media_state.mediaPreview} />
         {loading ? (

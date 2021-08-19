@@ -3,6 +3,7 @@ import CreatePostHeader from "../../components/CreatePostHeader/CreatePostHeader
 import { CenterInput, InputField, SubmitButton } from "./styles";
 import { SelectMediaContext } from "../../contexts/SelectMediaContextProvider";
 import { AuthContext } from "../../contexts/AuthContextProvider";
+import { ThemeContext } from "../../contexts/ThemeContextProvider";
 import ReactPlayer from "react-player";
 import { useHistory } from "react-router-dom";
 
@@ -10,6 +11,7 @@ const PostVideo = () => {
   const history = useHistory();
   const { media_state } = React.useContext(SelectMediaContext);
   const { auth_state } = React.useContext(AuthContext);
+  const { theme_state } = React.useContext(ThemeContext);
   const [post_caption, setPostCaption] = React.useState("");
   const [loading, controlLoading] = React.useState(false);
   let url = auth_state.url;
@@ -45,7 +47,14 @@ const PostVideo = () => {
       });
   };
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div
+      style={{
+        display: "flex",
+        height: "100vh",
+        justifyContent: "center",
+        backgroundColor: theme_state.background
+      }}
+    >
       <CreatePostHeader create_post={create_post} />
       <CenterInput>
         <InputField
@@ -55,6 +64,10 @@ const PostVideo = () => {
           placeholder="Add Caption"
           value={post_caption}
           name="post_caption"
+          style={{
+            backgroundColor: theme_state.background,
+            color: theme_state.color
+          }}
         />
         <div style={{ height: 200 }}>
           <ReactPlayer

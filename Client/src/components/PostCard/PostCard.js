@@ -184,7 +184,11 @@ const PostCard = ({ post }) => {
 
   return (
     <div>
-      <PostCardDesign>
+      <PostCardDesign
+        style={{
+          borderBottom: `1px solid ${theme_state.border}`
+        }}
+      >
         <UserImage
           src={`${url}/${post.user_img}`}
           onClick={() =>
@@ -198,7 +202,7 @@ const PostCard = ({ post }) => {
             <LineBox>
               <UserName
                 style={{
-                  color: theme_state.mobileNavIcon
+                  color: theme_state.color
                 }}
               >
                 {post.full_name}
@@ -207,17 +211,18 @@ const PostCard = ({ post }) => {
                 style={{
                   color: theme_state.typoMain
                 }}
-              >
-                {moment(post.created_at).twitterShort()}
-              </Date>
+              ></Date>
             </LineBox>
             {post.owner_id == user_id ? (
-              <Icon.Trash onClick={() => delete_post(post.p_id)} />
+              <Icon.Trash
+                onClick={() => delete_post(post.p_id)}
+                style={{ color: "#e3405f" }}
+              />
             ) : null}
           </Line1>
           <Line2
             style={{
-              color: theme_state.mobileNavIcon
+              color: theme_state.color
             }}
           >
             <Linkify>{post.post_caption}</Linkify>
@@ -241,12 +246,12 @@ const PostCard = ({ post }) => {
           </Line3>
           <Line4
             style={{
-              color: theme_state.mobileNavIcon
+              color: theme_state.color
             }}
           >
             {post.post_liker == null ? (
               <Icon.Heart
-                color="black"
+                color={theme_state.color}
                 onClick={() => {
                   like(post.p_id);
                   onClick();

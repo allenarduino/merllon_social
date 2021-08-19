@@ -14,6 +14,7 @@ import {
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import { PostContext } from "../../contexts/PostContextProvider";
 import { CommentContext } from "../../contexts/CommentContextProvider";
+import { ThemeContext } from "../../contexts/ThemeContextProvider";
 import CommentCard from "../CommentCard/CommentCard";
 const { v4: uuidv4 } = require("uuid");
 
@@ -21,6 +22,7 @@ const { v4: uuidv4 } = require("uuid");
 const CommentModal = props => {
   const { post_state } = React.useContext(PostContext);
   const { comment_state, comment_dispatch } = React.useContext(CommentContext);
+  const { theme_state } = React.useContext(ThemeContext);
   const { auth_state } = React.useContext(AuthContext);
   let url = auth_state.url;
   const [comment_text, setComment] = React.useState("");
@@ -102,7 +104,10 @@ const CommentModal = props => {
   return (
     <div>
       <CommentModalDesign onClick={props.close_modal}>
-        <MainModal onClick={e => e.stopPropagation()}>
+        <MainModal
+          onClick={e => e.stopPropagation()}
+          style={{ backgroundColor: theme_state.background }}
+        >
           {props.is_video == "false" ? (
             <PostImage src={`${url}/${props.post_media}`} />
           ) : (

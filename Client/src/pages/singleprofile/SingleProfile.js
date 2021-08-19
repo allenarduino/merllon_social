@@ -1,6 +1,7 @@
 import React from "react";
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import { ProfileContext } from "../../contexts/ProfileContextProvider";
+import { ThemeContext } from "../../contexts/ThemeContextProvider";
 import { ModalContext } from "../../contexts/ModalContextProvider";
 import { useHistory, useLocation } from "react-router-dom";
 
@@ -27,6 +28,7 @@ const SingleProfile = () => {
   const { auth_state } = React.useContext(AuthContext);
   const { profile_state, profile_dispatch } = React.useContext(ProfileContext);
   const { modal_state, modal_dispatch } = React.useContext(ModalContext);
+  const { theme_state } = React.useContext(ThemeContext);
 
   let url = auth_state.url;
 
@@ -57,7 +59,7 @@ const SingleProfile = () => {
     modal_dispatch({ type: "CLOSE_MODAL" });
   };
   return (
-    <MainContainer>
+    <MainContainer style={{ backgroundColor: theme_state.background }}>
       {profile_state.profile.length == 0 ? (
         <Loader />
       ) : (
@@ -67,8 +69,10 @@ const SingleProfile = () => {
               <ProfileContainer>
                 <CoverPhoto src={`${url}/${profile.coverphoto}`} />
                 <UserImg src={`${url}/${profile.user_img}`} />
-                <FullName>{profile.full_name}</FullName>
-                <Bio>{profile.bio}</Bio>
+                <FullName style={{ color: theme_state.color }}>
+                  {profile.full_name}
+                </FullName>
+                <Bio style={{ color: theme_state.color }}>{profile.bio}</Bio>
                 {user_id == profile.user_id ? (
                   <EditProfileButton
                     onClick={() => history.push("/editprofile")}

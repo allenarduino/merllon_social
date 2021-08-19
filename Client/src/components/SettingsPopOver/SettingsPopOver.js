@@ -25,21 +25,31 @@ import { ThemeContext } from "../../contexts/ThemeContextProvider";
 const SettingsPopOver = () => {
   const { theme_state, theme_dispatch } = React.useContext(ThemeContext);
   const set_light_theme = () => {
-    theme_dispatch({ type: "LIGHT_THEME" });
+    theme_dispatch({ type: "LIGHT_MODE" });
   };
   const set_dark_theme = () => {
-    theme_dispatch({ type: "DARK_THEME" });
+    theme_dispatch({ type: "DARK_MODE" });
   };
   return (
-    <SettingsMain>
+    <SettingsMain style={{ backgroundColor: theme_state.background }}>
       <SettingsHeader>
-        <SettingsTitle>Settings</SettingsTitle>
+        <SettingsTitle style={{ color: theme_state.color }}>
+          Settings
+        </SettingsTitle>
       </SettingsHeader>
       <Choices>
-        <ThemeText>Theme</ThemeText>
+        <ThemeText style={{ color: theme_state.color }}>Theme</ThemeText>
         <Spacer>
-          <Img src={Dark} onClick={() => set_dark_theme()} />
-          <Img src={Light} onClick={() => set_dark_theme()} />
+          <Img
+            src={Dark}
+            onClick={() => set_dark_theme()}
+            style={{ border: theme_state.is_dark ? "3px solid #e3405f " : "" }}
+          />
+          <Img
+            src={Light}
+            onClick={() => set_light_theme()}
+            style={{ border: theme_state.is_dark ? "" : "3px solid #e3405f " }}
+          />
         </Spacer>
       </Choices>
       <LogoutButton>Logout</LogoutButton>

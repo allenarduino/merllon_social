@@ -3,11 +3,13 @@ import { useHistory } from "react-router-dom";
 import { PopOverContainer, OptionsContainer, FileInput } from "./styles";
 import * as Icon from "react-feather";
 import { SelectMediaContext } from "../../contexts/SelectMediaContextProvider";
+import { ThemeContext } from "../../contexts/ThemeContextProvider";
 import { Fade } from "react-reveal";
 
 const PopOver = () => {
   const history = useHistory();
   const { media_dispatch } = React.useContext(SelectMediaContext);
+  const { theme_state } = React.useContext(ThemeContext);
 
   const handle_image_change = e => {
     media_dispatch({
@@ -27,9 +29,9 @@ const PopOver = () => {
     });
   };
   return (
-    <PopOverContainer>
+    <PopOverContainer style={{ backgroundColor: theme_state.background }}>
       <Fade bottom duration={900} distance="40px">
-        <label>
+        <label style={{ color: theme_state.color }}>
           <OptionsContainer>
             <FileInput
               type="file"
@@ -37,10 +39,11 @@ const PopOver = () => {
               onChange={handle_image_change}
               accept="image/x-png,image/jpeg,image/jpg"
             />
-            Add Photo <Icon.Image style={{ marginLeft: 10 }} />
+            Add Photo{" "}
+            <Icon.Image style={{ marginLeft: 10, color: theme_state.color }} />
           </OptionsContainer>
         </label>
-        <label>
+        <label style={{ color: theme_state.color }}>
           <OptionsContainer>
             <FileInput
               type="file"
