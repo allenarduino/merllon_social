@@ -234,6 +234,9 @@ const PostCard = ({ post }) => {
               <img
                 src={`${url}/${post.post_media}`}
                 style={{ width: "100%" }}
+                onClick={() =>
+                  history.push("/view_image", { image: post.post_media })
+                }
               />
             ) : (
               <ReactPlayer

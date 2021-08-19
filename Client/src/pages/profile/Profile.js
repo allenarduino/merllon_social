@@ -66,8 +66,18 @@ const Profile = () => {
           <ContentConatainer>
             {profile_state.profile.map(profile => (
               <ProfileContainer>
-                <CoverPhoto src={`${url}/${profile.coverphoto}`} />
-                <UserImg src={`${url}/${profile.user_img}`} />
+                <CoverPhoto
+                  src={`${url}/${profile.coverphoto}`}
+                  onClick={() =>
+                    history.push("/view_image", { image: profile.coverphoto })
+                  }
+                />
+                <UserImg
+                  src={`${url}/${profile.user_img}`}
+                  onClick={() =>
+                    history.push("/view_image", { image: profile.user_img })
+                  }
+                />
                 <FullName style={{ color: theme_state.color }}>
                   {profile.full_name}
                 </FullName>
