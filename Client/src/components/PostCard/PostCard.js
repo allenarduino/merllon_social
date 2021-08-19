@@ -207,7 +207,7 @@ const PostCard = ({ post }) => {
           </Line2>
 
           <Line3 style={{ marginTop: 15 }}>
-            {post.is_video == "false" ? (
+            {post.post_media == null ? null : post.is_video == "false" ? (
               /** <ImageModal imageUrl={`${url}/${post.post_media}`} />**/
               <img
                 src={`${url}/${post.post_media}`}

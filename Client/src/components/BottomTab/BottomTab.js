@@ -127,6 +127,17 @@ const BottomTab = props => {
                   />
                 </OptionsContainer>
               </label>
+              <OptionsContainer
+                onClick={() => {
+                  history.push("/write_post");
+                  setOpen(false);
+                }}
+              >
+                <b style={{ color: theme_state.color }}>Write Post</b>{" "}
+                <Icon.Feather
+                  style={{ marginLeft: 10, color: theme_state.color }}
+                />
+              </OptionsContainer>
             </Sheet.Content>
           </Sheet.Container>
 

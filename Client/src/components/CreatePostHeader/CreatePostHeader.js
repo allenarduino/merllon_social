@@ -6,11 +6,15 @@ import { ThemeContext } from "../../contexts/ThemeContextProvider";
 import { PostContext } from "../../contexts/PostContextProvider";
 
 const CreatePostHeader = props => {
+  const history = useHistory();
   const { theme_state } = React.useContext(ThemeContext);
   const { post_state } = React.useContext(PostContext);
   return (
     <Header style={{ backgroundColor: theme_state.background }}>
-      <Icon.Delete style={{ color: theme_state.color }} />
+      <Icon.Delete
+        onClick={() => history.goBack()}
+        style={{ color: theme_state.color }}
+      />
       <Spacer></Spacer>
       <HeaderRight>
         {post_state.post_sending ? (

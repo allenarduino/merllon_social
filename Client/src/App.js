@@ -14,6 +14,7 @@ import SingleProfile from "./pages/singleprofile/SingleProfile";
 import ScrollToTop from "./ScrollToTop";
 import ViewImage from "./pages/viewimage/ViewImage";
 import CommentPage from "./pages/commentpage/CommentPage";
+import WritePost from "./pages/writepost/WritePost";
 
 const App = () => {
   const { auth_state, auth_dispatch } = React.useContext(AuthContext);
@@ -50,6 +51,7 @@ const App = () => {
           <Route path="/editprofile" component={EditProfile} />
           <Route path="/post_image" component={PostImage} />
           <Route path="/post_video" component={PostVideo} />
+          <Route path="/write_post" component={WritePost} />
           <Route path="/singleprofile" component={SingleProfile} />
           <Route path="/view_image" component={ViewImage} />
           <Route path="/comment_page" component={CommentPage} />
