@@ -42,8 +42,26 @@ router.post("/create_post", type, auth, function(req, res) {
   });
 });
 
-// For displaying posts on homepage
+//For creating post without any media
+router.post("/write_post", auth, (req, res) => {
+  const post_caption = req.body.post_caption;
+  const user_id = req.user_id;
+  const inputData = [post_caption, user_id];
 
+  console.log(post_caption);
+  console.log(user_id);
+  const sql = `INSERT INTO posts(post_caption,owner_id) 
+  VALUES (?,?)`;
+  db.query(sql, inputData, function(err) {
+    console.log(post_caption);
+    console.log(err);
+    res.status(200).json({
+      mesaage: "Post Created"
+    });
+  });
+});
+
+// For displaying posts on homepage
 router.get("/posts", auth, (req, res) => {
   const user_id = req.user_id;
   const sql = `
@@ -147,6 +165,7 @@ router.get("/fetch_comments/:post_id", (req, res) => {
   const sql = `SELECT* FROM post_comments,users WHERE post_comments.C_post_id=${post_id}
   AND users.user_id=post_comments.user_id ORDER BY post_comments.id DESC`;
   db.query(sql, function(err, data) {
+    console.log(err);
     res.status(200).json({
       comments: data
     });
