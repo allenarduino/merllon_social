@@ -18,7 +18,7 @@ const ViewImage = () => {
           onClick={() => history.goBack()}
         />
       </BackArrowContainer>
-      <Image src={`${url}/${location.state.image}`} />
+      <Image src={location.state.image} />
     </ImageContainer>
   );
 };

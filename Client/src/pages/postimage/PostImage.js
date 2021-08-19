@@ -1,18 +1,24 @@
 import React from "react";
-import CreatePostHeader from "../../components/CreatePostHeader/CreatePostHeader";
-import { MyImage, CenterInput, InputField, SubmitButton } from "./styles";
 import { useHistory } from "react-router-dom";
+import * as Icon from "react-feather";
 import { SelectMediaContext } from "../../contexts/SelectMediaContextProvider";
-import { PostContext } from "../../contexts/PostContextProvider";
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import { ThemeContext } from "../../contexts/ThemeContextProvider";
+import {
+  MyImage,
+  CenterInput,
+  InputField,
+  SubmitButton,
+  Header,
+  HeaderRight,
+  Spacer
+} from "./styles";
 
 const PostImage = () => {
   const history = useHistory();
   const { media_state } = React.useContext(SelectMediaContext);
   const { auth_state } = React.useContext(AuthContext);
   const { theme_state } = React.useContext(ThemeContext);
-  const { post_dispatch } = React.useContext(PostContext);
   const [post_caption, setPostCaption] = React.useState("");
   const [loading, controlLoading] = React.useState(false);
   let url = auth_state.url;
@@ -31,7 +37,7 @@ const PostImage = () => {
       "x-access-token",
       auth_state.token || localStorage.getItem("token")
     );
-    fetch(`${url}/create_post`, {
+    fetch(`${url}/post_image`, {
       method: "POST",
       body: data,
       headers: myHeaders
@@ -39,7 +45,6 @@ const PostImage = () => {
       .then(res => res.json())
       .then(data => {
         controlLoading(false);
-        post_dispatch({ type: "POST_SENDING" });
         //alert(data.message);
         history.push("/");
       })
@@ -58,7 +63,24 @@ const PostImage = () => {
         backgroundColor: theme_state.background
       }}
     >
-      <CreatePostHeader create_post={create_post} />
+      <Header style={{ backgroundColor: theme_state.background }}>
+        <Icon.Delete
+          onClick={() => history.goBack()}
+          style={{ color: theme_state.color }}
+        />
+        <Spacer></Spacer>
+        <HeaderRight>
+          {loading ? (
+            <b style={{ color: theme_state.color }}>Sending...</b>
+          ) : (
+            <Icon.CheckCircle
+              onClick={() => create_post()}
+              style={{ color: theme_state.color }}
+            />
+          )}
+        </HeaderRight>
+      </Header>
+
       <CenterInput>
         <InputField
           placeholder="Add Caption"

@@ -57,7 +57,7 @@ const CommentCard = ({ comment }) => {
       }}
     >
       <UserImage
-        src={`${url}/${comment.user_img}`}
+        src={comment.user_img}
         onClick={() => {
           history.push("/singleprofile", {
             user_id: comment.user_id

@@ -63,13 +63,13 @@ const SingleProfile = () => {
             {profile_state.profile.map(profile => (
               <ProfileContainer>
                 <CoverPhoto
-                  src={`${url}/${profile.coverphoto}`}
+                  src={profile.coverphoto}
                   onClick={() =>
                     history.push("/view_image", { image: profile.coverphoto })
                   }
                 />
                 <UserImg
-                  src={`${url}/${profile.user_img}`}
+                  src={profile.user_img}
                   onClick={() =>
                     history.push("/view_image", { image: profile.user_img })
                   }
@@ -86,7 +86,7 @@ const SingleProfile = () => {
                   </EditProfileButton>
                 ) : (
                   <EditProfileButton
-                    onClick={() => window.open(profile.email, "_blank")}
+                    onClick={() => window.open(`mailto:${profile.email}`)}
                   >
                     Send Email
                   </EditProfileButton>

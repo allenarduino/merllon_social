@@ -178,9 +178,7 @@ const EditProfile = () => {
             <ProfileContainer>
               <CoverPhoto
                 src={
-                  coverphoto_selected
-                    ? coverphotoPreview
-                    : `${url}/${profile.coverphoto}`
+                  coverphoto_selected ? coverphotoPreview : profile.coverphoto
                 }
               />
               <label style={{ alignSelf: "flex-end", marginRight: 10 }}>
@@ -205,11 +203,7 @@ const EditProfile = () => {
                 ) : null}
               </label>
               <UserImg
-                src={
-                  user_img_selected
-                    ? user_imgPreview
-                    : `${url}/${profile.user_img}`
-                }
+                src={user_img_selected ? user_imgPreview : profile.user_img}
               />
               <label style={{ alignSelf: "center", marginTop: -10 }}>
                 <FileInput
@@ -262,7 +256,7 @@ const EditProfile = () => {
                     color={theme_state.color}
                   />
                 ) : (
-                  <div>Loading..</div>
+                  <div style={{ color: theme_state.color }}>Loading...</div>
                 )}
               </BioInputContainer>
             </ProfileContainer>

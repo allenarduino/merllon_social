@@ -67,7 +67,7 @@ const Home = () => {
 
           {post_state.user.map(user => (
             <SideNav style={{ backgroundColor: theme_state.background }}>
-              <Avatar src={`${url}/${user.user_img}`} />
+              <Avatar src={user.user_img} />
               <b style={{ color: theme_state.color }}>{user.full_name}</b>
             </SideNav>
           ))}

@@ -62,13 +62,13 @@ const Profile = () => {
             {profile_state.profile.map(profile => (
               <ProfileContainer>
                 <CoverPhoto
-                  src={`${url}/${profile.coverphoto}`}
+                  src={profile.coverphoto}
                   onClick={() =>
                     history.push("/view_image", { image: profile.coverphoto })
                   }
                 />
                 <UserImg
-                  src={`${url}/${profile.user_img}`}
+                  src={profile.user_img}
                   onClick={() =>
                     history.push("/view_image", { image: profile.user_img })
                   }

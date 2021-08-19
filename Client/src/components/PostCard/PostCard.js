@@ -168,7 +168,7 @@ const PostCard = ({ post }) => {
         }}
       >
         <UserImage
-          src={`${url}/${post.user_img}`}
+          src={post.user_img}
           onClick={() =>
             history.push("/singleprofile", {
               user_id: post.owner_id
@@ -210,7 +210,7 @@ const PostCard = ({ post }) => {
             {post.post_media == null ? null : post.is_video == "false" ? (
               /** <ImageModal imageUrl={`${url}/${post.post_media}`} />**/
               <img
-                src={`${url}/${post.post_media}`}
+                src={post.post_media}
                 style={{ width: "100%" }}
                 onClick={() =>
                   history.push("/view_image", { image: post.post_media })
@@ -218,7 +218,7 @@ const PostCard = ({ post }) => {
               />
             ) : (
               <ReactPlayer
-                url={`${url}/${post.post_media}`}
+                url={post.post_media}
                 width="100%"
                 height="100%"
                 controls={true}
