@@ -1,7 +1,6 @@
 import React from "react";
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import { ProfileContext } from "../../contexts/ProfileContextProvider";
-import { ModalContext } from "../../contexts/ModalContextProvider";
 import { ThemeContext } from "../../contexts/ThemeContextProvider";
 import { useHistory } from "react-router-dom";
 
@@ -9,7 +8,6 @@ import Loader from "../../components/Loader/Loader";
 import PostCard from "../../components/PostCard/PostCard";
 import { Fade } from "react-reveal";
 import jwt_decode from "jwt-decode";
-import CommentModal from "../../components/CommentModal/CommentModal";
 import {
   MainContainer,
   ContentConatainer,
@@ -24,9 +22,8 @@ import {
 
 const Profile = () => {
   const history = useHistory();
-  const { auth_state, auth_dispatch } = React.useContext(AuthContext);
+  const { auth_state } = React.useContext(AuthContext);
   const { profile_state, profile_dispatch } = React.useContext(ProfileContext);
-  const { modal_state, modal_dispatch } = React.useContext(ModalContext);
   const { theme_state } = React.useContext(ThemeContext);
 
   let url = auth_state.url;
@@ -54,9 +51,7 @@ const Profile = () => {
   React.useEffect(() => {
     fetch_user();
   }, []);
-  const close_modal = () => {
-    modal_dispatch({ type: "CLOSE_MODAL" });
-  };
+
   return (
     <MainContainer style={{ backgroundColor: theme_state.background }}>
       {profile_state.profile.length == 0 ? (
@@ -92,15 +87,6 @@ const Profile = () => {
                 <PostCard post={post} />
               </PostsContainer>
             ))}
-            {modal_state.modal_open ? (
-              <CommentModal
-                close_modal={close_modal}
-                post_id={modal_state.post_id}
-                post_media={modal_state.post_media}
-                is_video={modal_state.is_video}
-                full_name={modal_state.full_name}
-              />
-            ) : null}
           </ContentConatainer>
         </Fade>
       )}

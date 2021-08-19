@@ -1,25 +1,25 @@
 import React from "react";
 import * as Icon from "react-feather";
 import jwt_decode from "jwt-decode";
+import { useLocation, useHistory } from "react-router-dom";
 import {
-  CommentModalDesign,
-  MainModal,
-  PostImage,
-  RightSide,
-  CommentInput,
-  FormContainer,
-  SubMit,
-  PostVideo
+  BackArrowContainer,
+  CommentContainer,
+  CommentBackground,
+  CommentInputContainer,
+  CommentInput
 } from "./styles";
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import { PostContext } from "../../contexts/PostContextProvider";
 import { CommentContext } from "../../contexts/CommentContextProvider";
 import { ThemeContext } from "../../contexts/ThemeContextProvider";
-import CommentCard from "../CommentCard/CommentCard";
+import CommentCard from "../../components/CommentCard/CommentCard";
 const { v4: uuidv4 } = require("uuid");
 
 //This modal is for Desktop Devices
-const CommentModal = props => {
+const CommentPage = () => {
+  const location = useLocation();
+  const history = useHistory();
   const { post_state } = React.useContext(PostContext);
   const { comment_state, comment_dispatch } = React.useContext(CommentContext);
   const { theme_state } = React.useContext(ThemeContext);
@@ -37,15 +37,19 @@ const CommentModal = props => {
     commentsEndRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
-  //For fetching user_img in context to use it offline
+  //For fetching user_img  and name in context to use it offline
   const user_img = post_state.user.map(user => {
     return user.user_img;
   });
+  const full_name = post_state.user.map(user => {
+    return user.full_name;
+  });
+
   //Fetching  the comments from server
   const fetch_comments = () => {
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    fetch(`${url}/fetch_comments/${props.post_id}`, {
+    fetch(`${url}/fetch_comments/${location.state.post_id}`, {
       method: "GET",
       headers: myHeaders
     })
@@ -62,13 +66,12 @@ const CommentModal = props => {
   const offline_comment = {
     text: comment_text,
     user_img: user_img,
-    full_name: props.full_name,
+    full_name: full_name,
     id: uuidv4(),
     user_id: user_id
   };
 
-  const create_comment = e => {
-    e.preventDefault();
+  const create_comment = () => {
     if (comment_text == "") {
       return;
     } else {
@@ -83,7 +86,7 @@ const CommentModal = props => {
       );
       myHeaders.append("Content-Type", "application/json");
       const data = { comment_text: comment_text };
-      fetch(`${url}/create_comment/${props.post_id}`, {
+      fetch(`${url}/create_comment/${location.state.post_id}`, {
         method: "POST",
         headers: myHeaders,
         body: JSON.stringify(data)
@@ -102,36 +105,33 @@ const CommentModal = props => {
   }, []);
 
   return (
-    <div>
-      <CommentModalDesign onClick={props.close_modal}>
-        <MainModal
-          onClick={e => e.stopPropagation()}
-          style={{ backgroundColor: theme_state.background }}
-        >
-          {props.is_video == "false" ? (
-            <PostImage src={`${url}/${props.post_media}`} />
-          ) : (
-            <PostVideo controls style={{ height: "100%" }}>
-              <source src={`${url}/${props.post_media}`}></source>
-            </PostVideo>
-          )}
-          <RightSide>
-            <div ref={commentsEndRef} />
-            {comment_state.comments.map(comment => (
-              <CommentCard comment={comment} />
-            ))}
-            <FormContainer onSubmit={create_comment}>
-              <CommentInput
-                placeholder="Write Commment"
-                value={comment_text}
-                onChange={handle_comment_change}
-              />
-              <SubMit type="submit" />
-            </FormContainer>
-          </RightSide>
-        </MainModal>
-      </CommentModalDesign>
-    </div>
+    <CommentBackground>
+      <BackArrowContainer>
+        <Icon.ArrowLeft
+          color="#fff"
+          size={25}
+          onClick={() => history.goBack()}
+        />
+      </BackArrowContainer>
+      <CommentContainer style={{ backgroundColor: theme_state.background }}>
+        <div ref={commentsEndRef} />
+        {comment_state.comments.map(comment => (
+          <CommentCard comment={comment} />
+        ))}
+        <CommentInputContainer>
+          <CommentInput
+            type="text"
+            placeholder="Write Comment"
+            onChange={handle_comment_change}
+          />
+          <Icon.Send
+            color="#e3405f"
+            style={{ marginTop: 10, marginLeft: 10 }}
+            onClick={() => create_comment()}
+          />
+        </CommentInputContainer>
+      </CommentContainer>
+    </CommentBackground>
   );
 };
-export default CommentModal;
+export default CommentPage;

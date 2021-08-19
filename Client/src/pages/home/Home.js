@@ -1,7 +1,6 @@
 import React from "react";
 import { PostContext } from "../../contexts/PostContextProvider";
 import { AuthContext } from "../../contexts/AuthContextProvider";
-import { ModalContext } from "../../contexts/ModalContextProvider";
 import { ThemeContext } from "../../contexts/ThemeContextProvider";
 
 import { Fade } from "react-reveal";
@@ -17,14 +16,10 @@ import {
   SideNav,
   Avatar
 } from "./styles";
-import CommentModal from "../../components/CommentModal/CommentModal";
-import { width } from "@material-ui/system";
 
 const Home = () => {
-  const [isOpen, setOpen] = React.useState(true);
   const { post_state, post_dispatch } = React.useContext(PostContext);
   const { auth_state } = React.useContext(AuthContext);
-  const { modal_state, modal_dispatch } = React.useContext(ModalContext);
   const { theme_state } = React.useContext(ThemeContext);
 
   let url = auth_state.url;
@@ -50,9 +45,6 @@ const Home = () => {
       .catch(err => console.log(err));
   };
 
-  const close_modal = e => {
-    modal_dispatch({ type: "CLOSE_MODAL" });
-  };
   React.useEffect(() => {
     fetch_posts();
   }, []);
@@ -67,7 +59,7 @@ const Home = () => {
             post_state.posts.map(post => (
               <Fade bottom duration={900} distance="40px">
                 <PostsContainer>
-                  <PostCard post={post} onClick={() => setOpen(true)} />
+                  <PostCard post={post} />
                 </PostsContainer>
               </Fade>
             ))
@@ -80,15 +72,6 @@ const Home = () => {
             </SideNav>
           ))}
         </ContentConatainer>
-        {modal_state.modal_open ? (
-          <CommentModal
-            close_modal={close_modal}
-            post_id={modal_state.post_id}
-            post_media={modal_state.post_media}
-            is_video={modal_state.is_video}
-            full_name={modal_state.full_name}
-          />
-        ) : null}
       </MainContainer>
     </div>
   );

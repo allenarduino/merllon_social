@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment-twitter";
 import Linkify from "react-linkify";
 import jwt_decode from "jwt-decode";
 import * as Icon from "react-feather";
@@ -11,9 +10,8 @@ import { ThemeContext } from "../../contexts/ThemeContextProvider";
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import { PostContext } from "../../contexts/PostContextProvider";
 import { ProfileContext } from "../../contexts/ProfileContextProvider";
-import { ModalContext } from "../../contexts/ModalContextProvider";
+
 import {
-  UserImageWrapper,
   UserImage,
   PostCardContent,
   Line1,
@@ -23,16 +21,8 @@ import {
   LineBox,
   PostCardDesign,
   Line3,
-  Line4,
-  Delete,
-  HeartWrapper,
-  BottomSheetContainer,
-  FormContainer,
-  CommentInput,
-  SubMit
+  Line4
 } from "./styles";
-import ImageModal from "../ImageModal/ImageModal";
-import CommentModal from "../CommentModal/CommentModal";
 
 //Material UI animation  for pulsating heart
 const useStyles = makeStyles(theme => ({
@@ -67,7 +57,6 @@ const PostCard = ({ post }) => {
   const { auth_state } = React.useContext(AuthContext);
   const { post_state, post_dispatch } = React.useContext(PostContext);
   const { profile_state, profile_dispatch } = React.useContext(ProfileContext);
-  const { modal_dispatch } = React.useContext(ModalContext);
 
   //For handling heart animation
   const [pulse, setPulse] = React.useState(false);
@@ -171,17 +160,6 @@ const PostCard = ({ post }) => {
     }
   };
 
-  const open_modal = (id, post_media, owner_id, full_name, is_video) => {
-    modal_dispatch({
-      type: "OPEN_MODAL",
-      payload1: id,
-      payload2: post_media,
-      payload3: owner_id,
-      payload4: full_name,
-      payload5: is_video
-    });
-  };
-
   return (
     <div>
       <PostCardDesign
@@ -275,16 +253,13 @@ const PostCard = ({ post }) => {
             )}
             <b style={{ fontSize: 18 }}>{post.total_likes}</b>
             <Icon.MessageCircle
-              onClick={() => {
-                open_modal(
-                  post.p_id,
-                  post.post_media,
-                  post.owner_id,
-                  post.full_name,
-                  post.is_video
-                );
-                // setOpen(true);
-              }}
+              onClick={() =>
+                history.push("/comment_page", {
+                  post_media: post.post_media,
+                  post_id: post.p_id,
+                  is_video: post.is_video
+                })
+              }
             />
             <b style={{ fontSize: 18 }}>{post.total_comments}</b>
           </Line4>
