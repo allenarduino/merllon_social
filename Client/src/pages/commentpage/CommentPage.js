@@ -2,6 +2,7 @@ import React from "react";
 import * as Icon from "react-feather";
 import jwt_decode from "jwt-decode";
 import { useLocation, useHistory } from "react-router-dom";
+import { Fade } from "react-reveal";
 import {
   BackArrowContainer,
   CommentContainer,
@@ -131,11 +132,15 @@ const CommentPage = () => {
               </EmptyCommentFeedBack>
             ) : null}
             {comment_state.comments.map(comment => (
-              <CommentCard comment={comment} />
+              <Fade bottom duration={900} distance="40px">
+                <CommentCard comment={comment} />
+              </Fade>
             ))}
           </div>
         )}
-        <CommentInputContainer>
+        <CommentInputContainer
+          style={{ backgroundColor: theme_state.background }}
+        >
           <CommentInput
             type="text"
             placeholder="Write Comment"

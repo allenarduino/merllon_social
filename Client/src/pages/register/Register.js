@@ -60,7 +60,7 @@ const Register = () => {
       .then(res => res.json())
       .then(data => {
         if (data.error == null) {
-          history.push("/login");
+          history.push("/");
         } else {
           setError(data.error);
           controlLoading(false);

@@ -5,21 +5,22 @@ import { ThemeContext } from "../../contexts/ThemeContextProvider";
 
 const Center = styled.div`
   display: flex;
-  flex: 1;
-  overflow: auto;
-  justify-content: center;
-  margin-top: 200px;
   height: 100vh;
-  font-size: 100px;
-  margin-left: 20px;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  left: 0;
+  right: 0;
+  bottom: 0;
   flex: 1;
 `;
 
 const Loader = () => {
   const { theme_state } = React.useContext(ThemeContext);
   return (
-    <Center>
-      <FadeLoader color={theme_state.color} style={{ alignSelf: "center" }} />
+    <Center style={{ backgroundColor: theme_state.background }}>
+      <FadeLoader color={theme_state.color} style={{ position: "fixed" }} />
     </Center>
   );
 };

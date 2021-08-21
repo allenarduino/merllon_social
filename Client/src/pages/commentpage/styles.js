@@ -20,7 +20,6 @@ export const BackArrowContainer = styled.div`
   width: 100%;
   padding-top: 15px;
   padding-bottom: 15px;
-  height: 20px;
   display: flex;
   flex-direction: column;
   padding-left: 10px;
@@ -34,19 +33,24 @@ export const CommentContainer = styled.div`
   height: 90vh;
   width: 100%;
   display: flex;
+  position: relative;
   flex-direction: column;
+  padding-bottom: 100px;
   overflow: auto;
+  overflow-y: scroll;
 `;
 
 export const CommentInputContainer = styled.div`
-  margin-top: auto;
-  width: 100%;
-  padding-left: 10px;
   display: flex;
   flex-direction: row;
-  height: 50px;
-  position: sticky;
-  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  position: fixed;
 `;
 
 export const CommentInput = styled.textarea`

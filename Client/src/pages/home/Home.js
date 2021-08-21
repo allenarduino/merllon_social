@@ -8,13 +8,16 @@ import Loader from "../../components/Loader/Loader";
 import PostCard from "../../components/PostCard/PostCard";
 import HomeHeader from "../../components/HomeHeader/HomeHeader";
 import jwt_decode from "jwt-decode";
+import { Link } from "react-router-dom";
 
 import {
-  MainContainer,
-  ContentConatainer,
-  PostsContainer,
-  SideNav,
-  Avatar
+  ContentContainer,
+  RightSide,
+  LeftSide,
+  Avatar,
+  UserCard,
+  Middle,
+  BodyWrapp
 } from "./styles";
 
 const Home = () => {
@@ -49,31 +52,36 @@ const Home = () => {
     fetch_posts();
   }, []);
   return (
-    <div>
+    <main>
       <HomeHeader />
-      <MainContainer style={{ backgroundColor: theme_state.background }}>
-        <ContentConatainer style={{ backgroundColor: theme_state.background }}>
-          {post_state.posts.length == 0 ? (
-            <Loader />
-          ) : (
-            post_state.posts.map(post => (
+      {post_state.posts.length == 0 ? (
+        <Loader />
+      ) : (
+        <ContentContainer style={{ backgroundColor: theme_state.background }}>
+          <LeftSide
+            style={{ backgroundColor: theme_state.background }}
+          ></LeftSide>
+          <Middle>
+            {post_state.posts.map(post => (
               <Fade bottom duration={900} distance="40px">
-                <PostsContainer>
-                  <PostCard post={post} />
-                </PostsContainer>
+                <PostCard post={post} />
               </Fade>
-            ))
-          )}
-
-          {post_state.user.map(user => (
-            <SideNav style={{ backgroundColor: theme_state.background }}>
-              <Avatar src={user.user_img} />
-              <b style={{ color: theme_state.color }}>{user.full_name}</b>
-            </SideNav>
-          ))}
-        </ContentConatainer>
-      </MainContainer>
-    </div>
+            ))}
+          </Middle>
+          <RightSide>
+            {post_state.user.map(user => (
+              <UserCard style={{ backgroundColor: theme_state.background }}>
+                <Link to="/profile">
+                  {" "}
+                  <Avatar src={user.user_img} />
+                </Link>
+                <b style={{ color: theme_state.color }}>{user.full_name}</b>
+              </UserCard>
+            ))}
+          </RightSide>
+        </ContentContainer>
+      )}
+    </main>
   );
 };
 

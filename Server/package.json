@@ -2,9 +2,11 @@
   "name": "teklife",
   "version": "1.0.0",
   "description": "Social media app for KNUST students",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+   
   },
   "author": "Allen Jones",
   "license": "ISC",

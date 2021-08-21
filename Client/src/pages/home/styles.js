@@ -1,48 +1,72 @@
 import styled from "styled-components";
 
-//container for the sapce except Top nav
-export const MainContainer = styled.main`
+//Container for posts and side nav
+export const ContentContainer = styled.section`
+  width: 100%;
   display: flex;
+  flex-direction: row;
   flex: 1;
-  margin-top: 50px;
+  padding-bottom: 100px;
+`;
+
+export const LeftSide = styled.div`
+  @media (max-width: ${769}px) {
+    display: none;
+  }
+  width: 200px;
+  align-self: flex-start;
+  float: left;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  scroll: no;
+`;
+
+//conatainer for posts except side navs
+export const Middle = styled.div`
+  @media (max-width: ${769}px) {
+    width: 100%;
+  }
+  width: 45%;
+  overflow: hidden;
+  margin: 0 auto;
+  height: 100%;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding-top: 80px;
   padding-bottom: 80px;
 `;
 
-//Container for posts and side nav
-export const ContentConatainer = styled.section`
-  width: 100%;
-  max-width: 934px;
-  padding: 0 0 8px;
-  margin: 0 auto;
-`;
-
-//conatainer for posts except side nav
-export const PostsContainer = styled.div`
-  width: 100%;
-  max-width: 614px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-`;
-
 //container for side nav
-export const SideNav = styled.section`
-  @media (max-width: ${1000}px) {
+export const RightSide = styled.div`
+  @media (max-width: ${769}px) {
     display: none;
+    width: 10%;
   }
-  max-width: 250px;
+
+  width: 30%;
+  float: right;
   position: fixed;
-  left: 60%;
-  top: 84px;
-  transform: translateX(calc(-50% + 322px));
+  scroll: no;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+export const UserCard = styled.div`
   flex-direction: column;
-  width: 30vw;
-  height: 40vh;
   display: flex;
   align-items: center;
-  align-self: flex-end;
   border-radius: 20px;
   box-shadow: 0px 0px 2px;
+  margin-top: 100px;
+  width: 70%;
+  height: 300px;
+  align-self: center;
 `;
 
 export const Avatar = styled.img`

@@ -1,8 +1,14 @@
 import React from "react";
-import CreatePostHeader from "../../components/CreatePostHeader/CreatePostHeader";
-import { CenterInput, InputField, SubmitButton } from "./styles";
+import * as Icon from "react-feather";
+import {
+  CenterInput,
+  InputField,
+  SubmitButton,
+  Header,
+  HeaderRight,
+  Spacer
+} from "./styles";
 import { useHistory } from "react-router-dom";
-import { PostContext } from "../../contexts/PostContextProvider";
 import { AuthContext } from "../../contexts/AuthContextProvider";
 import { ThemeContext } from "../../contexts/ThemeContextProvider";
 
@@ -56,7 +62,25 @@ const WritePost = () => {
         backgroundColor: theme_state.background
       }}
     >
-      <CreatePostHeader create_post={create_post} />
+      <Header style={{ backgroundColor: theme_state.background }}>
+        <Icon.Delete
+          onClick={() => history.goBack()}
+          style={{ color: theme_state.color }}
+          size={25}
+        />
+        <Spacer></Spacer>
+        <HeaderRight>
+          {loading ? (
+            <b style={{ color: theme_state.color }}>Sending...</b>
+          ) : (
+            <Icon.CheckCircle
+              onClick={() => create_post()}
+              style={{ color: theme_state.color }}
+              size={25}
+            />
+          )}
+        </HeaderRight>
+      </Header>
       <CenterInput>
         <InputField
           placeholder="Share your thoughts and experiences with people..."

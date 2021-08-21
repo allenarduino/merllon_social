@@ -124,7 +124,7 @@ const Login = () => {
               >
                 Don't have an account?{" "}
                 <Link
-                  to="/register"
+                  to="/"
                   style={{
                     color: theme_state.secondaryColor,
                     textDecoration: "none"

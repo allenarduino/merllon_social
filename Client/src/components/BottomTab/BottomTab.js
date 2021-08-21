@@ -42,14 +42,13 @@ const BottomTab = props => {
             <Link to="/" style={{ color: "black" }}>
               <Icon.Home
                 name="home-outline"
-                className="mr-2 feedIcons"
                 color={theme_state.color}
-                size={24}
+                size={27}
               />
             </Link>
           ) : (
             <Link to="/" style={{ color: theme_state.color }}>
-              <Icon.Home size={20} color={theme_state.color} />
+              <Icon.Home size={25} color={theme_state.color} />
             </Link>
           )}
         </BnTab>
@@ -58,12 +57,12 @@ const BottomTab = props => {
             <Icon.PlusCircle
               className="mr-2 feedIcons"
               color={theme_state.color}
-              size={24}
+              size={27}
             />
           ) : (
             <Icon.PlusCircle
               className="mr-2 feedIcons"
-              size={20}
+              size={25}
               onClick={() => setOpen(true)}
               color={theme_state.color}
             />
@@ -75,14 +74,14 @@ const BottomTab = props => {
               <Icon.User
                 className="mr-2 feedIcons"
                 color={theme_state.color}
-                size={24}
+                size={27}
               />
             </Link>
           ) : (
             <Link to="/profile" style={{ color: theme_state.color }}>
               <Icon.User
                 className="mr-2 feedIcons"
-                size={20}
+                size={25}
                 color={theme_state.color}
               />
             </Link>
@@ -92,7 +91,7 @@ const BottomTab = props => {
         <Sheet isOpen={isOpen} onClose={() => setOpen(false)}>
           <Sheet.Container
             style={{
-              height: 200,
+              height: 250,
               paddingLeft: 20,
               backgroundColor: theme_state.background
             }}
@@ -110,6 +109,7 @@ const BottomTab = props => {
                   <b style={{ color: theme_state.color }}>Add Photo</b>{" "}
                   <Icon.Image
                     style={{ marginLeft: 10, color: theme_state.color }}
+                    size={25}
                   />
                 </OptionsContainer>
               </label>
@@ -119,11 +119,12 @@ const BottomTab = props => {
                     type="file"
                     required
                     onChange={handle_video_change}
-                    accept="video/mp4,video/x-m4v,video/mp3,video/*"
+                    accept="video/mp4,video/mp3"
                   />
                   <b style={{ color: theme_state.color }}>Add Video</b>{" "}
                   <Icon.Video
                     style={{ marginLeft: 10, color: theme_state.color }}
+                    size={25}
                   />
                 </OptionsContainer>
               </label>
@@ -136,6 +137,7 @@ const BottomTab = props => {
                 <b style={{ color: theme_state.color }}>Write Post</b>{" "}
                 <Icon.Feather
                   style={{ marginLeft: 10, color: theme_state.color }}
+                  size={25}
                 />
               </OptionsContainer>
             </Sheet.Content>

@@ -66,6 +66,7 @@ const PostVideo = () => {
         <Icon.Delete
           onClick={() => history.goBack()}
           style={{ color: theme_state.color }}
+          size={25}
         />
         <Spacer></Spacer>
         <HeaderRight>
@@ -75,6 +76,7 @@ const PostVideo = () => {
             <Icon.CheckCircle
               onClick={() => create_post()}
               style={{ color: theme_state.color }}
+              size={25}
             />
           )}
         </HeaderRight>

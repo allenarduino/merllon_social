@@ -8,17 +8,19 @@ import Loader from "../../components/Loader/Loader";
 import PostCard from "../../components/PostCard/PostCard";
 import { Fade } from "react-reveal";
 import jwt_decode from "jwt-decode";
+
 import {
-  MainContainer,
-  ContentConatainer,
+  ContentContainer,
   ProfileContainer,
   CoverPhoto,
   UserImg,
   FullName,
   Bio,
   PostsContainer,
-  EditProfileButton
+  EditProfileButton,
+  Middle
 } from "./styles";
+import { RightSide, LeftSide } from "../home/styles";
 
 const SingleProfile = () => {
   const history = useHistory();
@@ -54,54 +56,58 @@ const SingleProfile = () => {
   }, []);
 
   return (
-    <MainContainer style={{ backgroundColor: theme_state.background }}>
+    <main>
       {profile_state.profile.length == 0 ? (
         <Loader />
       ) : (
-        <Fade bottom duration={900} distance="40px">
-          <ContentConatainer>
+        <ContentContainer style={{ backgroundColor: theme_state.background }}>
+          <RightSide></RightSide>
+          <Middle>
             {profile_state.profile.map(profile => (
-              <ProfileContainer>
-                <CoverPhoto
-                  src={profile.coverphoto}
-                  onClick={() =>
-                    history.push("/view_image", { image: profile.coverphoto })
-                  }
-                />
-                <UserImg
-                  src={profile.user_img}
-                  onClick={() =>
-                    history.push("/view_image", { image: profile.user_img })
-                  }
-                />
-                <FullName style={{ color: theme_state.color }}>
-                  {profile.full_name}
-                </FullName>
-                <Bio style={{ color: theme_state.color }}>{profile.bio}</Bio>
-                {user_id == profile.user_id ? (
-                  <EditProfileButton
-                    onClick={() => history.push("/editprofile")}
-                  >
-                    Edit Profile
-                  </EditProfileButton>
-                ) : (
-                  <EditProfileButton
-                    onClick={() => window.open(`mailto:${profile.email}`)}
-                  >
-                    Send Email
-                  </EditProfileButton>
-                )}
-              </ProfileContainer>
+              <Fade bottom duration={900} distance="40px">
+                <ProfileContainer>
+                  <CoverPhoto
+                    src={profile.coverphoto}
+                    onClick={() =>
+                      history.push("/view_image", { image: profile.coverphoto })
+                    }
+                  />
+                  <UserImg
+                    src={profile.user_img}
+                    onClick={() =>
+                      history.push("/view_image", { image: profile.user_img })
+                    }
+                  />
+                  <FullName style={{ color: theme_state.color }}>
+                    {profile.full_name}
+                  </FullName>
+                  <Bio style={{ color: theme_state.color }}>{profile.bio}</Bio>
+                  {user_id == profile.user_id ? (
+                    <EditProfileButton
+                      onClick={() => history.push("/editprofile")}
+                    >
+                      Edit Profile
+                    </EditProfileButton>
+                  ) : (
+                    <EditProfileButton
+                      onClick={() => window.open(profile.email, "_blank")}
+                    >
+                      Send Email
+                    </EditProfileButton>
+                  )}
+                </ProfileContainer>
+              </Fade>
             ))}
             {profile_state.user_posts.map(post => (
-              <PostsContainer>
+              <Fade bottom duration={900} distance="40px">
                 <PostCard post={post} />
-              </PostsContainer>
+              </Fade>
             ))}
-          </ContentConatainer>
-        </Fade>
+          </Middle>
+          <LeftSide></LeftSide>
+        </ContentContainer>
       )}
-    </MainContainer>
+    </main>
   );
 };
 export default SingleProfile;

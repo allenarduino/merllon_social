@@ -97,6 +97,7 @@ router.post("/write_post", auth, (req, res) => {
 });
 
 // For displaying posts on homepage
+// For displaying posts on homepage
 router.get("/posts", auth, (req, res) => {
   const user_id = req.user_id;
   const sql = `
@@ -111,7 +112,7 @@ router.get("/posts", auth, (req, res) => {
     console.log(err);
     res.status(200).json({ posts: results[0], user: results[1] });
   });
-  db.end();
+  // db.end();
 });
 
 // For displaying posts on homepage
