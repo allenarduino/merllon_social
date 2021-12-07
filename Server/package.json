@@ -1,7 +1,7 @@
 {
-  "name": "teklife",
+  "name": "merllon-social",
   "version": "1.0.0",
-  "description": "Social media app for KNUST students",
+  "description": "Social media Web Application",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
