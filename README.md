@@ -4,9 +4,9 @@ Simple social media web application powered by Node backend and React frontend
 
 ## Technoligies used:
 
-React(JavaScript,styled components)
-Nodejs
-MySQL database
+- React(JavaScript,styled components)
+- Nodejs
+- MySQL database
 
 ## Screenshots
 
