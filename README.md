@@ -63,11 +63,6 @@ src="https://github.com/allenarduino/merllon_social/blob/master/screenshots/scre
 <img
 width="210"
 alt="Capture 1"
-src="https://github.com/allenarduino/merllon_social/blob/master/screenshots/screenshot1.png">
-
-<img
-width="210"
-alt="Capture 1"
 src="https://github.com/allenarduino/merllon_social/blob/master/screenshots/screenshot11.png">
 
 <img
